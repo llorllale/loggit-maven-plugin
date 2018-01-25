@@ -15,6 +15,9 @@ None of the other changelog plugins has the combinations of features that I need
 ## Feedback
 Please direct any questions, feature requests or bugs to the [issue tracker](https://github.com/llorllale/gitlog-maven-plugin/issues/).
 
+## How to contribute?
+See [CONTRIBUTING](./CONTRIBUTING.md).
+
 ## License
 `gitlog-maven-plugin` is licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0). A copy of the license has been included
 in [LICENSE](./LICENSE).
