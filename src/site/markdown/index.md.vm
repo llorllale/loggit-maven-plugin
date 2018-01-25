@@ -1,0 +1,41 @@
+#*
+ * Copyright 2018 George Aristy
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *#
+#set($h1 = '#')
+#set($h2 = '##')
+#set($h3 = '###')
+#set($h4 = '####')
+#set($h5 = '#####')
+#set($h6 = '######')
+
+$h3 About
+Coming soon...
+
+**Note:** the API is currently unstable as we approach our [first milestone](https://github.com/llorllale/${project.artifactId}/milestone/1).
+
+For bugs or enhancements, please use our [issue tracker](${project.url}/issues).
+
+<br/>
+
+$h4 Why another changelog plugin?
+None of the other changelog plugins has the combinations of features that I need:
+* Markdown format
+* Smarter selection of commit ranges (including tags)
+* Project activity
+
+<br/>
+
+<div>Icon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC BY 3.0</a></div>
+
