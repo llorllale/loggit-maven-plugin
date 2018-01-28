@@ -1,4 +1,4 @@
-# gitlog-maven-plugin ![icon](/src/site/resources/images/icon_32.png)
+# gitlog-maven-plugin ![icon](/src/site/resources/images/icon_64.png)
 
 [![codecov](https://codecov.io/gh/llorllale/gitlog-maven-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/llorllale/gitlog-maven-plugin)
 [![Build Status](https://travis-ci.org/llorllale/gitlog-maven-plugin.svg?branch=master)](https://travis-ci.org/llorllale/gitlog-maven-plugin)
