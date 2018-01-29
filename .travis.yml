@@ -1,0 +1,49 @@
+sudo: false
+dist: trusty
+language: java
+cache:
+  directories:
+  - "$HOME/.m2"
+jdk:
+- openjdk8
+jobs:
+  include:
+  - if: type = pull_request
+    script:
+    - mvn -P release-profile -DskipTests=true clean install
+    - mvn clean cobertura:cobertura && mvn -DskipTests=true cobertura:check
+    - bash <(curl -s https://codecov.io/bash)
+  - if: type = push AND tag IS present
+    script:
+    - openssl aes-256-cbc -K $encrypted_ed9a8466a19c_key -iv $encrypted_ed9a8466a19c_iv
+      -in release/codesigning.asc.enc -out release/codesigning.asc -d
+    - gpg --fast-import release/codesigning.asc
+    - mvn --settings release/mvnsettings.xml -P deploy -DskipTests=true clean deploy
+    - mvn -P site clean compile site
+    deploy:
+      provider: pages
+      skip_cleanup: true
+      local_dir: target/site/
+      github_token: "$site_token"
+      on:
+        tags: true
+        branch: master
+  - if: type = push AND NOT tag IS present AND branch = master
+    script:
+    - mvn clean cobertura:cobertura && mvn -DskipTests=true cobertura:check
+    - bash <(curl -s https://codecov.io/bash)
+    - mvn -P release-profile -DskipTests=true clean install
+    - openssl aes-256-cbc -K $encrypted_ed9a8466a19c_key -iv $encrypted_ed9a8466a19c_iv
+      -in release/codesigning.asc.enc -out release/codesigning.asc -d
+    - gpg --fast-import release/codesigning.asc
+    - export VERSION=$(mvn help:evaluate -Dexpression=project.version | grep '^[0-9]' | sed "s/SNAPSHOT/rc$TRAVIS_BUILD_ID/")
+    - echo "Candidate Version is $VERSION"
+    - mvn versions:set -DnewVersion=$VERSION && mvn --settings release/mvnsettings.xml -P deploy -DskipTests=true clean deploy
+    - mvn -P site clean compile site
+    deploy:
+      provider: pages
+      skip_cleanup: true
+      local_dir: target/site/
+      github_token: "$site_token"
+      on:
+        branch: master
