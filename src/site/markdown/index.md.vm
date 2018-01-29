@@ -20,7 +20,8 @@
 #set($h5 = '#####')
 #set($h6 = '######')
 
-$h3 About
+$h3 About ![icon](images/icon_32.png)
+
 Coming soon...
 
 **Note:** the API is currently unstable as we approach our [first milestone](https://github.com/llorllale/${project.artifactId}/milestone/1).
@@ -31,6 +32,7 @@ For bugs or enhancements, please use our [issue tracker](${project.url}/issues).
 
 $h4 Why another changelog plugin?
 None of the other changelog plugins has the combinations of features that I need:
+
 * Markdown format
 * Smarter selection of commit ranges (including tags)
 * Project activity

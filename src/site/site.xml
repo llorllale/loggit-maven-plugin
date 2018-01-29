@@ -36,7 +36,7 @@
       <brand>
         <name>
           <![CDATA[
-            gitlog-maven-plugin <img src="images/icon_16.png"/>
+            gitlog-maven-plugin <img src="images/icon_32.png"/>
           ]]>
         </name>
         <href>./index.html</href>
@@ -63,11 +63,10 @@
   <body>
     <links>
       <item name="About" href="./index.html"/>
-      <item name="GitHub" href="http://github.com/llorllale/gitlog-maven-plugin"/>
+      <item name="View on GitHub" href="http://github.com/llorllale/gitlog-maven-plugin"/>
     </links>
 
     <menu name="Documentation">
-      <item name="Usage" href="./usage.html"/>
       <item name="JavaDocs ${project.version}" href="http://javadoc.io/doc/org.llorllale/gitlog-maven-plugin"/>
     </menu>
 
