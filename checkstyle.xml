@@ -100,7 +100,13 @@
     <module name="Regexp">
       <property name="message" value="All non-abstract classes must be final."/>
       <property name="illegalPattern" value="true"/>
-      <property name="format" value="^((?!final)(?!abstract).)*class"/>
+      <property name="format" value="^((?!final)(?!abstract).)*[^\.]class"/>
+      <property name="ignoreComments" value="true"/>
+    </module>
+    <module name="Regexp">
+      <property name="message" value="All non-abstract classes must be final."/>
+      <property name="illegalPattern" value="true"/>
+      <property name="format" value="^class "/>
       <property name="ignoreComments" value="true"/>
     </module>
 
@@ -205,17 +211,18 @@
     <module name="UnusedImports"/>
 
     <!-- Javadoc -->
-    <module name="AtclauseOrder"/>
+    <module name="AtclauseOrder">
+      <property name="tagOrder"
+                value="@author,@version,@param,@return,@throws,@exception,@see,@since,@serial,@serialField,@serialData,@deprecated,@todo"/>
+    </module>
     <module name="JavadocMethod"/>
     <module name="JavadocParagraph"/>
     <module name="JavadocStyle">
       <property name="checkEmptyJavadoc" value="true"/>
     </module>
-    <module name="JavadocTagContinuationIndentation">
-      <property name="offset" value="2"/>
-    </module>
     <module name="JavadocType">
       <property name="authorFormat" value="\S"/>
+      <property name="allowUnknownTags" value="true"/>
     </module>
     <module name="JavadocVariable">
       <property name="scope" value="package"/>
@@ -266,7 +273,6 @@
     <module name="AbbreviationAsWordInName">
       <property name="allowedAbbreviationLength" value="1"/>
     </module>
-    <module name="AbstractClassName"/>
     <module name="ClassTypeParameterName"/>
     <module name="ConstantName"/>
     <module name="InterfaceTypeParameterName"/>

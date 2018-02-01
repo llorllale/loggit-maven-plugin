@@ -16,6 +16,7 @@
 
 package org.llorllale.mvn.plgn.gitlog;
 
+import com.jcabi.xml.XML;
 import org.eclipse.jgit.revwalk.RevCommit;
 
 /**
@@ -23,6 +24,9 @@ import org.eclipse.jgit.revwalk.RevCommit;
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.1.0
+ * @todo #9:30min Implement method asXml() for DefaultCommit. The resulting
+ *  XML must comply with the schema defined in commit.xsd. See how
+ *  it is done in DefaultLog.asXml().
  */
 final class DefaultCommit implements Commit {
   private final RevCommit rev;
@@ -35,5 +39,10 @@ final class DefaultCommit implements Commit {
    */
   DefaultCommit(RevCommit rev) {
     this.rev = rev;
+  }
+
+  @Override
+  public XML asXml() {
+    throw new UnsupportedOperationException("Not supported yet.");
   }
 }

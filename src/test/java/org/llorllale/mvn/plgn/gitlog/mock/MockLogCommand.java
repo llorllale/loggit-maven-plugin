@@ -14,50 +14,36 @@
  * limitations under the License.
  */
 
-package org.llorllale.mvn.plgn.gitlog;
+package org.llorllale.mvn.plgn.gitlog.mock;
 
-import com.jcabi.xml.StrictXML;
-import com.jcabi.xml.XML;
-import com.jcabi.xml.XMLDocument;
+import java.io.IOException;
+import java.util.Collections;
 import org.eclipse.jgit.api.LogCommand;
-import org.xembly.Directives;
-import org.xembly.Xembler;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.NoHeadException;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
 /**
- * Default impl of {@link Log}.
+ * Mock LogCommand for tests.
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.1.0
  */
-final class DefaultLog implements Log {
-  private final LogCommand gitlog;
+public final class MockLogCommand extends LogCommand {
 
   /**
    * Ctor.
    * 
-   * @param gitlog the log command
+   * @throws java.io.IOException if an I/O error occurs
    * @since 0.1.0
    */
-  DefaultLog(LogCommand gitlog) {
-    this.gitlog = gitlog;
+  public MockLogCommand() throws IOException {
+    super(new FileRepositoryBuilder().findGitDir().build());
   }
 
   @Override
-  public Iterable<Commit> commits() {
-    return new DefaultCommits(this.gitlog);
-  }
-
-  @Override
-  public XML asXml() {
-    final Directives dir = new Directives().add("log").add("commits");
-    this.commits().forEach(c -> dir.add(c.asXml().toString()));
-    return new StrictXML(
-      new XMLDocument(
-        new Xembler(
-          dir
-        ).xmlQuietly()
-      ),
-      new Schema()
-    );
+  public Iterable<RevCommit> call() throws GitAPIException, NoHeadException {
+    return Collections.emptyList();
   }
 }

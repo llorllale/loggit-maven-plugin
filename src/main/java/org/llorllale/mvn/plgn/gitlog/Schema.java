@@ -16,20 +16,34 @@
 
 package org.llorllale.mvn.plgn.gitlog;
 
-import com.jcabi.xml.XML;
+import com.jcabi.xml.XSD;
+import com.jcabi.xml.XSDDocument;
+import java.util.Collection;
+import javax.xml.transform.Source;
+import org.xml.sax.SAXParseException;
 
 /**
- * A git commit.
+ * The XML schema for the intermediate transformation stage.
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.1.0
  */
-public interface Commit {
+final class Schema implements XSD {
+  private final String schemaFile;
+
   /**
-   * This {@link Commit} as XML.
+   * Ctor.
    * 
-   * @return this {@link Commit} as XML
    * @since 0.1.0
    */
-  XML asXml();
+  Schema() {
+    this.schemaFile = "/xsd/schema.xsd";
+  }
+
+  @Override
+  public Collection<SAXParseException> validate(Source xml) {
+    return XSDDocument.make(
+      Schema.class.getResourceAsStream(this.schemaFile)
+    ).validate(xml);
+  }
 }
