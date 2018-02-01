@@ -245,6 +245,22 @@
       <version>1.3</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.jcabi</groupId>
+      <artifactId>jcabi-xml</artifactId>
+      <version>0.21.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.jcabi.incubator</groupId>
+      <artifactId>xembly</artifactId>
+      <version>0.22</version>
+    </dependency>
+    <dependency>
+      <groupId>com.jcabi</groupId>
+      <artifactId>jcabi-matchers</artifactId>
+      <version>1.4</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -255,6 +271,14 @@
         <includes>
           <include>LICENSE</include>
           <include>NOTICE</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>${basedir}/src/main/resources/xsd</directory>
+        <filtering>false</filtering>
+        <targetPath>xsd</targetPath>
+        <includes>
+          <include>*.xsd</include>
         </includes>
       </resource>
     </resources>
@@ -415,6 +439,9 @@ limitations under the License.</inlineHeader>
           <version>1.0.6.1</version>
           <configuration>
             <noticeTemplate>NOTICE.template</noticeTemplate>
+            <licenseMapping>
+              <param>${basedir}/license-mappings.xml</param>
+            </licenseMapping>
           </configuration>
         </plugin>
       </plugins>

@@ -16,20 +16,17 @@
 
 package org.llorllale.mvn.plgn.gitlog;
 
-import com.jcabi.xml.XML;
+import org.junit.Test;
 
 /**
- * A git commit.
+ * Tests for {@link DefaultCommit}.
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.1.0
  */
-public interface Commit {
-  /**
-   * This {@link Commit} as XML.
-   * 
-   * @return this {@link Commit} as XML
-   * @since 0.1.0
-   */
-  XML asXml();
+public class DefaultCommitTest {
+  @Test(expected = UnsupportedOperationException.class)
+  public void asXmlUnsupported() {
+    new DefaultCommit(null).asXml();
+  }
 }

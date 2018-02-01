@@ -16,10 +16,15 @@
 
 package org.llorllale.mvn.plgn.gitlog;
 
+import static com.jcabi.matchers.XhtmlMatchers.hasXPath;
+import com.jcabi.xml.StrictXML;
+import java.io.IOException;
 import java.nio.file.Paths;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import org.junit.Test;
+import org.llorllale.mvn.plgn.gitlog.mock.MockLogCommand;
 
 /**
  * Unit tests of {@link DefaultLog}.
@@ -35,7 +40,7 @@ public class DefaultLogTest {
    * @since 0.1.0
    */
   @Test
-  public void returnsCommits() throws Exception {
+  public void returnsCommits() throws IOException {
     assertNotNull(
       new DefaultLog(
         new org.eclipse.jgit.api.Git(
@@ -45,5 +50,31 @@ public class DefaultLogTest {
         ).log()
       ).commits()
     );
+  }
+
+  /**
+   * The XML will have no commit nodes when there are no commits.
+   * 
+   * @since 0.1.0
+   */
+  @Test
+  public void asXmlNoCommits() throws IOException {
+    assertThat(
+      new DefaultLog(new MockLogCommand()).asXml().toString(),
+      hasXPath("/log/commits[count(commit) = 0]")
+    );
+  }
+
+  /**
+   * The XML complies with the schema.
+   * 
+   * @since 0.1.0
+   */
+  @Test
+  public void asXmlIsValidAgainstSchema() throws IOException {
+    new StrictXML(
+      new DefaultLog(new MockLogCommand()).asXml(),
+      new Schema()
+    ).toString();
   }
 }

@@ -16,6 +16,8 @@
 
 package org.llorllale.mvn.plgn.gitlog;
 
+import com.jcabi.xml.XML;
+
 /**
  * A {@link Git} repo's log.
  *
@@ -30,4 +32,12 @@ public interface Log {
    * @since 0.1.0
    */
   Iterable<Commit> commits();
+
+  /**
+   * This {@link Log} as XML.
+   * 
+   * @return an XML view of this {@link Log}
+   * @since 0.1.0
+   */
+  XML asXml();
 }
