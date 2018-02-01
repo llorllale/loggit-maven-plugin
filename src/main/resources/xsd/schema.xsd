@@ -33,12 +33,11 @@
     <xsd:complexType>
       <xsd:sequence>
         <!--
-         @todo #14:15min I don't know if xsd:dateTime is really necessary here.
-          The date could be stored in some other format - like unix epoch time - 
-          that doesn't contain the timezone information.
+         @todo #17:15min Validate if 'hash' is the correct term. It could be
+          'id'. If so, change it to 'id' or whatever is most appropriate.
         -->
         <xsd:element name="hash" type="xsd:string"/>
-        <xsd:element name="date" type="xsd:dateTime"/>
+        <xsd:element name="authorDate" type="xsd:dateTime"/>
         <xsd:element ref="author"/>
         <xsd:element name="message">
           <xsd:complexType>
