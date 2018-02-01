@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2018 George Aristy
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://gitlog.mvn.plgn.llorllale.org/schema/commit"
+            xmlns:tns="http://gitlog.mvn.plgn.llorllale.org/schema/commit"
+            xmlns:cmn="http://gitlog.mvn.plgn.llorllale.org/schema/common"
+            elementFormDefault="qualified">
+  <xsd:import namespace="http://gitlog.mvn.plgn.llorllale.org/schema/common" schemaLocation="common.xsd"/>
+  <xsd:complexType name="commit">
+    <xsd:sequence>
+      <!--
+       @todo #14:15min I don't know if xsd:dateTime is really necessary here.
+        The date could be stored in some other format - like unix epoch time - 
+        that doesn't contain the timezone information.
+      -->
+      <xsd:element name="hash" type="xsd:string"/>
+      <xsd:element name="date" type="xsd:dateTime"/>
+      <xsd:element ref="cmn:author"/>
+      <xsd:element name="message">
+        <xsd:complexType>
+          <xsd:sequence>
+            <!--
+             @todo #14:15min Confirm if "title" and "description" are accurate
+              names. If they're not, change to something more appropriate. We
+              want to match as closely as possible the git terminology.
+            -->
+            <xsd:element name="title" type="xsd:string"/>
+            <xsd:element name="description" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>
