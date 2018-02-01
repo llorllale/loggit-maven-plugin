@@ -3,6 +3,7 @@
 [![codecov](https://codecov.io/gh/llorllale/gitlog-maven-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/llorllale/gitlog-maven-plugin)
 [![Build Status](https://travis-ci.org/llorllale/gitlog-maven-plugin.svg?branch=master)](https://travis-ci.org/llorllale/gitlog-maven-plugin)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.llorllale/gitlog-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.llorllale/gitlog-maven-plugin)
+[![PDD status](http://www.0pdd.com/svg?name=llorllale/gitlog-maven-plugin)](http://www.0pdd.com/p?name=llorllale/gitlog-maven-plugin)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://llorllale.github.io/gitlog-maven-plugin/license.html)
 
 ## Why another changelog plugin?
