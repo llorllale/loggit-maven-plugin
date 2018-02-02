@@ -49,11 +49,8 @@
   <xsd:element name="author">
     <xsd:complexType>
       <xsd:sequence>
-        <!--
-         @todo #14:15min Check to see if we can also obtain the author's full
-          name here. If we can, add another element to the sequence.
-        -->
-        <xsd:element name="login" type="xsd:string"/>
+        <xsd:element name="name" type="xsd:string"/>
+        <xsd:element name="email" type="xsd:string"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
