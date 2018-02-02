@@ -32,11 +32,7 @@
   <xsd:element name="commit">
     <xsd:complexType>
       <xsd:sequence>
-        <!--
-         @todo #17:15min Validate if 'hash' is the correct term. It could be
-          'id'. If so, change it to 'id' or whatever is most appropriate.
-        -->
-        <xsd:element name="hash" type="xsd:string"/>
+        <xsd:element name="id" type="xsd:string"/>
         <xsd:element name="authorDate" type="xsd:dateTime"/>
         <xsd:element ref="author"/>
         <xsd:element name="message">
