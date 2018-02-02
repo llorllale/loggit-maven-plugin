@@ -38,13 +38,8 @@
         <xsd:element name="message">
           <xsd:complexType>
             <xsd:sequence>
-              <!--
-               @todo #14:15min Confirm if "title" and "description" are accurate
-                names. If they're not, change to something more appropriate. We
-                want to match as closely as possible the git terminology.
-              -->
-              <xsd:element name="title" type="xsd:string"/>
-              <xsd:element name="description" type="xsd:string"/>
+              <xsd:element name="short" type="xsd:string"/>
+              <xsd:element name="full" type="xsd:string"/>
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
