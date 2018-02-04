@@ -16,6 +16,9 @@
 
 package org.llorllale.mvn.plgn.gitlog;
 
+import java.nio.file.Paths;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.junit.Test;
 
 /**
@@ -23,10 +26,20 @@ import org.junit.Test;
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.1.0
+ * @todo #20:30min Need to setup integration tests by creating local
+ *  git repos in a temp directory and test against those because {@link RevCommit} has final
+ *  methods that cannot be overriden. When that is done, implement test for
+ *  DefaultCommitTest.asXml().
  */
 public class DefaultCommitTest {
-  @Test(expected = UnsupportedOperationException.class)
-  public void asXmlUnsupported() {
-    new DefaultCommit(null).asXml();
+  @Test
+  public void asXmlUnsupported() throws Exception{
+    new DefaultCommit(
+      new org.eclipse.jgit.api.Git(
+        new FileRepositoryBuilder()
+          .findGitDir(Paths.get(".").toFile())
+          .build()
+      ).log().call().iterator().next()
+    ).asXml();
   }
 }

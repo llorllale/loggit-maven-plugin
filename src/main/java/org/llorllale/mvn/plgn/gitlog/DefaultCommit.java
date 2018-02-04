@@ -16,17 +16,20 @@
 
 package org.llorllale.mvn.plgn.gitlog;
 
+import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.xembly.Directives;
+import org.xembly.Xembler;
 
 /**
  * Default impl of {@link Commit}.
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.1.0
- * @todo #9:30min Implement method asXml() for DefaultCommit. The resulting
- *  XML must comply with the schema defined in commit.xsd. See how
- *  it is done in DefaultLog.asXml().
+ * @todo #20:30min We need to split the author parts into its own separate interface.
+ *  As it is, this class, and especially its mock counterpart, handle too many details.
  */
 final class DefaultCommit implements Commit {
   private final RevCommit rev;
@@ -43,6 +46,24 @@ final class DefaultCommit implements Commit {
 
   @Override
   public XML asXml() {
-    throw new UnsupportedOperationException("Not supported yet.");
+    return new StrictXML(
+      new XMLDocument(
+        new Xembler(
+          new Directives()
+            .add("commit")
+              .add("id").set(this.rev.getId()).up()
+              .add("authorDate").set(this.rev.getAuthorIdent().getWhen().toInstant()).up()
+              .add("author")
+                .add("name").set(this.rev.getAuthorIdent().getName()).up()
+                .add("email").set(this.rev.getAuthorIdent().getEmailAddress()).up()
+                .up()
+              .add("message")
+                .add("short").set(this.rev.getShortMessage()).up()
+                .add("full").set(this.rev.getFullMessage()).up()
+                .up()
+        ).xmlQuietly()
+      ),
+      new Schema()
+    );
   }
 }
