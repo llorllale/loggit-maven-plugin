@@ -141,6 +141,11 @@
               <failsOnError>true</failsOnError>
               <linkXRef>false</linkXRef>
               <violationSeverity>info</violationSeverity>
+              <!--
+               @todo #20:30min Let's start adding the test sources to
+                checkstyle. We need to start being strict with tests as well if
+                we want to be consistent.
+              -->
               <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
             </configuration>
             <reportSets>
