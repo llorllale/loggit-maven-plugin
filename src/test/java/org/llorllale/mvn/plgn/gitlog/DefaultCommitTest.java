@@ -16,9 +16,16 @@
 
 package org.llorllale.mvn.plgn.gitlog;
 
-import java.nio.file.Paths;
+// @checkstyle AvoidStaticImport (3 lines)
+import static com.jcabi.matchers.XhtmlMatchers.hasXPath;
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.junit.Assert.assertThat;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.junit.Test;
 
 /**
@@ -26,26 +33,52 @@ import org.junit.Test;
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.1.0
- * @todo #20:30min Need to setup integration tests by creating local
- *  git repos in a temp directory and test against those because {@link RevCommit} has final
- *  methods that cannot be overriden. When that is done, implement test for
- *  DefaultCommitTest.asXml().
+ * @checkstyle MultipleStringLiterals (500 lines)
  */
 public final class DefaultCommitTest {
   /**
-   * Check for expected XML.
+   * Check for expected field values.
    * 
    * @throws Exception unexpected
    * @since 0.1.0
    */
   @Test
-  public void asXml() throws Exception {
-    new DefaultCommit(
-      new org.eclipse.jgit.api.Git(
-        new FileRepositoryBuilder()
-          .findGitDir(Paths.get(".").toFile())
-          .build()
-      ).log().call().iterator().next()
-    ).asXml();
+  public void readsValues() throws Exception {
+    final org.eclipse.jgit.api.Git repo = this.repo();
+    repo.add().addFilepattern(".").call();
+    final RevCommit commit = repo.commit()
+      .setAuthor("gitlog test", "test@gitlog.com")
+      .setMessage("This is a test.\n\nTest of DefaultCommit.asXml")
+      .call();
+    assertThat(
+      new DefaultCommit(commit).asXml(),
+      allOf(
+        hasXPath(String.format("/commit[id = '%s']", commit.getId())),
+        hasXPath(String.format("/commit/author[name = '%s']", commit.getAuthorIdent().getName())),
+        // @checkstyle LineLength (2 lines)
+        hasXPath(String.format("/commit/author[email = '%s']", commit.getAuthorIdent().getEmailAddress())),
+        hasXPath(String.format("/commit/author[date = '%s']", commit.getAuthorIdent().getWhen().toInstant())),
+        hasXPath(String.format("/commit/message[short = '%s']", commit.getShortMessage())),
+        hasXPath(String.format("/commit/message[full = '%s']", commit.getFullMessage()))
+      )
+    );
+  }
+
+  /**
+   * Initializes a git repo in a temp directory.
+   * 
+   * @return the repo
+   * @throws IOException unexpected
+   * @throws GitAPIException unexpected
+   * @todo #29:30min Checkstyle: enforce use of the javadoc tag @since.
+   *  Also enforce the semantic version format. Useful to know when something was
+   *  added.
+   */
+  private org.eclipse.jgit.api.Git repo() throws IOException, GitAPIException {
+    final Path dir = Files.createTempDirectory("");
+    Files.createFile(dir.resolve("test.txt"));
+    return org.eclipse.jgit.api.Git.init()
+      .setDirectory(dir.toFile())
+      .call();
   }
 }
