@@ -146,7 +146,7 @@
                 checkstyle. We need to start being strict with tests as well if
                 we want to be consistent.
               -->
-              <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+              <sourceDirectory>${base}/src</sourceDirectory>
             </configuration>
             <reportSets>
               <reportSet>
@@ -336,6 +336,7 @@
             <failsOnError>true</failsOnError>
             <linkXRef>false</linkXRef>
             <violationSeverity>info</violationSeverity>
+            <sourceDirectory>${basedir}/src</sourceDirectory>
           </configuration>
         </plugin>
         <plugin>

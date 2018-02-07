@@ -16,11 +16,13 @@
 
 package org.llorllale.mvn.plgn.gitlog;
 
+// @checkstyle AvoidStaticImport (1 line)
+import static org.junit.Assert.assertNotNull;
+
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Paths;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 /**
@@ -29,11 +31,13 @@ import org.junit.Test;
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.1.0
  */
-public class DefaultCommitsTest {
+@SuppressWarnings("checkstyle:MultipleStringLiterals")
+public final class DefaultCommitsTest {
 
   /**
    * Returns a reference to commits.
    * 
+   * @throws IOException unexpected
    * @since 0.1.0
    */
   @Test
@@ -52,6 +56,7 @@ public class DefaultCommitsTest {
   /**
    * Iterator is not empty.
    * 
+   * @throws IOException unexpected
    * @since 0.1.0
    */
   @Test
@@ -68,6 +73,7 @@ public class DefaultCommitsTest {
   /**
    * IOExceptions are unchecked.
    * 
+   * @throws IOException unexpected
    * @since 0.1.0
    */
   @Test(expected = UncheckedIOException.class)
