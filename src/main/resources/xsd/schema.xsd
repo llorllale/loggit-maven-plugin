@@ -33,12 +33,6 @@
     <xsd:complexType>
       <xsd:sequence>
         <xsd:element name="id" type="xsd:string"/>
-        <!--
-         @todo #20:30min Move 'authorDate' inside 'author' and rename to
-          just 'date'. Remember that in git, a commit's author and committer
-          are two different things.
-        -->
-        <xsd:element name="authorDate" type="xsd:dateTime"/>
         <xsd:element ref="author"/>
         <xsd:element name="message">
           <xsd:complexType>
@@ -56,6 +50,7 @@
       <xsd:sequence>
         <xsd:element name="name" type="xsd:string"/>
         <xsd:element name="email" type="xsd:string"/>
+        <xsd:element name="date" type="xsd:dateTime"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
