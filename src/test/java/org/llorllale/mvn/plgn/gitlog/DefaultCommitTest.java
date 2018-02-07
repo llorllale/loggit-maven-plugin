@@ -31,9 +31,15 @@ import org.junit.Test;
  *  methods that cannot be overriden. When that is done, implement test for
  *  DefaultCommitTest.asXml().
  */
-public class DefaultCommitTest {
+public final class DefaultCommitTest {
+  /**
+   * Check for expected XML.
+   * 
+   * @throws Exception unexpected
+   * @since 0.1.0
+   */
   @Test
-  public void asXmlUnsupported() throws Exception{
+  public void asXml() throws Exception {
     new DefaultCommit(
       new org.eclipse.jgit.api.Git(
         new FileRepositoryBuilder()

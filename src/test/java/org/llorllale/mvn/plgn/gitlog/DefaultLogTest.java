@@ -16,13 +16,15 @@
 
 package org.llorllale.mvn.plgn.gitlog;
 
+// @checkstyle AvoidStaticImport (3 lines)
 import static com.jcabi.matchers.XhtmlMatchers.hasXPath;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+
 import com.jcabi.xml.StrictXML;
 import java.io.IOException;
 import java.nio.file.Paths;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.llorllale.mvn.plgn.gitlog.mock.MockLogCommand;
 
@@ -32,11 +34,13 @@ import org.llorllale.mvn.plgn.gitlog.mock.MockLogCommand;
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.1.0
  */
-public class DefaultLogTest {
+@SuppressWarnings("checkstyle:MethodName")
+public final class DefaultLogTest {
 
   /**
    * Returns a reference to commits.
    * 
+   * @throws IOException unexpected
    * @since 0.1.0
    */
   @Test
@@ -55,6 +59,7 @@ public class DefaultLogTest {
   /**
    * The XML will have no commit nodes when there are no commits.
    * 
+   * @throws IOException unexpected
    * @since 0.1.0
    */
   @Test
@@ -68,6 +73,7 @@ public class DefaultLogTest {
   /**
    * The XML complies with the schema.
    * 
+   * @throws IOException unexpected
    * @since 0.1.0
    */
   @Test

@@ -91,6 +91,11 @@
       <property name="offCommentFormat" value="@checkstyle.OFF\: [\w\|]+"/>
       <property name="onCommentFormat" value="@checkstyle.ON\: [\w\|]+"/>
     </module>
+    <module name="SuppressWithNearbyCommentFilter">
+      <property name="commentFormat" value="@checkstyle (\w+) \((\d+) lines?\)"/>
+      <property name="checkFormat" value="$1"/>
+      <property name="influenceFormat" value="$2"/>
+    </module>
 
     <!-- 
       Disallow non-final non-abstract classes.
@@ -213,7 +218,7 @@
     <!-- Javadoc -->
     <module name="AtclauseOrder">
       <property name="tagOrder"
-                value="@author,@version,@param,@return,@throws,@exception,@see,@since,@serial,@serialField,@serialData,@deprecated,@todo"/>
+                value="@author,@version,@param,@return,@throws,@exception,@see,@since,@serial,@serialField,@serialData,@deprecated,@checkstyle,@todo"/>
     </module>
     <module name="JavadocMethod"/>
     <module name="JavadocParagraph"/>
@@ -256,6 +261,7 @@
     <module name="Indentation">
       <property name="basicOffset" value="2"/>
       <property name="caseIndent" value="2"/>
+      <property name="lineWrappingIndentation" value="2"/>
     </module>
     <module name="OuterTypeFilename"/>
     <module name="TodoComment">
