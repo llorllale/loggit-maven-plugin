@@ -19,7 +19,11 @@ package org.llorllale.mvn.plgn.gitlog;
 import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
-import org.eclipse.jgit.api.LogCommand;
+import java.io.IOException;
+import org.cactoos.iterable.Mapped;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
@@ -30,32 +34,40 @@ import org.xembly.Xembler;
  * @since 0.1.0
  */
 final class DefaultLog implements Log {
-  private final LogCommand gitlog;
+  private final Repository repo;
+  private final Ref ref;
 
   /**
    * Ctor.
    * 
-   * @param gitlog the log command
+   * @param repo the repo
+   * @param ref the ref for which to get the commits for
    * @since 0.1.0
    */
-  DefaultLog(LogCommand gitlog) {
-    this.gitlog = gitlog;
+  DefaultLog(Repository repo, Ref ref) {
+    this.repo = repo;
+    this.ref = ref;
   }
 
   @Override
-  public Iterable<Commit> commits() {
-    return new DefaultCommits(this.gitlog);
+  public Iterable<Commit> commits() throws IOException {
+    final RevWalk walk = new RevWalk(this.repo);
+    walk.markStart(walk.parseCommit(this.ref.getObjectId()));
+    return new Mapped<>(
+      DefaultCommit::new,
+      walk
+    );
   }
 
   @Override
-  public XML asXml() {
-    final Directives dir = new Directives().add("log").add("commits");
-    this.commits().forEach(c -> dir.add(c.asXml().toString()));
+  public XML asXml() throws IOException {
+    final Directives dirs = new Directives().add("log").add("commits");
+    this.commits().forEach(commit ->
+      dirs.append(Directives.copyOf(commit.asXml().node()))
+    );
     return new StrictXML(
       new XMLDocument(
-        new Xembler(
-          dir
-        ).xmlQuietly()
+        new Xembler(dirs).xmlQuietly()
       ),
       new Schema()
     );
