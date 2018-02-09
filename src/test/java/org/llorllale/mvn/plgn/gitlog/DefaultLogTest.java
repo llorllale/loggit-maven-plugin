@@ -86,27 +86,24 @@ public final class DefaultLogTest {
    * 
    * @throws Exception unexpected
    * @since 0.1.0
-   * @todo #36:30min The commit XML should be setting the id to the hexadecimal form of
-   *  the commit's hash (in string form). Currently it's just setting it to whatever
-   *  ObjectId.toString() returns. After fixing that, return to this test and adjust
-   *  accordingly.
    */
   @Test
   public void asXmlAllCommits() throws Exception {
     final org.eclipse.jgit.api.Git repo = this.repo();
-    this.addCommit(repo, "first", "first@test.com", "First commit");
-    this.addCommit(repo, "second", "second@test.com", "Second commit");
+    final RevCommit first = this.addCommit(repo, "first", "first@test.com", "First commit");
+    final RevCommit second = this.addCommit(repo, "second", "second@test.com", "Second commit");
     assertThat(
       new DefaultLog(repo.getRepository(), repo.getRepository().findRef("master")).asXml(),
       hasXPaths(
-        "//commit//author[name = 'first']",
-        "//commit//author[email = 'first@test.com']",
-        "//commit//message[short = 'First commit']",
-        "//commit//message[full = 'First commit']",
-        "//commit//author[name = 'second']",
-        "//commit//author[email = 'second@test.com']",
-        "//commit//message[short = 'Second commit']",
-        "//commit//message[full = 'Second commit']"
+        // @checkstyle LineLength (8 lines)
+        String.format("/log/commits/commit[id = '%s']//author[name = 'first']", first.getId().getName()),
+        String.format("/log/commits/commit[id = '%s']//author[email = 'first@test.com']", first.getId().getName()),
+        String.format("/log/commits/commit[id = '%s']//message[short = 'First commit']", first.getId().getName()),
+        String.format("/log/commits/commit[id = '%s']//message[full = 'First commit']", first.getId().getName()),
+        String.format("/log/commits/commit[id = '%s']//author[name = 'second']", second.getId().getName()),
+        String.format("/log/commits/commit[id = '%s']//author[email = 'second@test.com']", second.getId().getName()),
+        String.format("/log/commits/commit[id = '%s']//message[short = 'Second commit']", second.getId().getName()),
+        String.format("/log/commits/commit[id = '%s']//message[full = 'Second commit']", second.getId().getName())
       )
     );
   }

@@ -51,7 +51,7 @@ final class DefaultCommit implements Commit {
         new Xembler(
           new Directives()
             .add("commit")
-              .add("id").set(this.rev.getId()).up()
+              .add("id").set(this.rev.getId().getName()).up()
               .add("author")
                 .add("name").set(this.rev.getAuthorIdent().getName()).up()
                 .add("email").set(this.rev.getAuthorIdent().getEmailAddress()).up()

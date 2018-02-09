@@ -53,7 +53,7 @@ public final class DefaultCommitTest {
     assertThat(
       new DefaultCommit(commit).asXml(),
       allOf(
-        hasXPath(String.format("/commit[id = '%s']", commit.getId())),
+        hasXPath(String.format("/commit[id = '%s']", commit.getId().getName())),
         hasXPath(String.format("/commit/author[name = '%s']", commit.getAuthorIdent().getName())),
         // @checkstyle LineLength (2 lines)
         hasXPath(String.format("/commit/author[email = '%s']", commit.getAuthorIdent().getEmailAddress())),
