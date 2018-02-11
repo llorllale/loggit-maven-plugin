@@ -13,11 +13,12 @@ jobs:
     - mvn -P release-profile -DskipTests=true clean install
     - mvn clean cobertura:cobertura && mvn -DskipTests=true cobertura:check
     - bash <(curl -s https://codecov.io/bash)
-  - if: type = push AND tag IS present
+  - if: type = push AND tag IS present AND branch = master
     script:
     - openssl aes-256-cbc -K $encrypted_ed9a8466a19c_key -iv $encrypted_ed9a8466a19c_iv
       -in release/codesigning.asc.enc -out release/codesigning.asc -d
     - gpg --fast-import release/codesigning.asc
+    - mvn versions:set -DnewVersion=$TRAVIS_TAG && mvn --settings release/mvnsettings.xml -P deploy -DskipTests=true clean deploy
     - mvn --settings release/mvnsettings.xml -P deploy -DskipTests=true clean deploy
     - mvn -P site clean compile site
     deploy:
