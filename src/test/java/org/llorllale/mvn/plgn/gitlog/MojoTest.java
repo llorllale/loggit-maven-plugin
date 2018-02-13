@@ -23,6 +23,7 @@ import static org.junit.Assert.assertThat;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import org.apache.maven.plugin.MojoFailureException;
 import org.cactoos.text.TextOf;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -34,7 +35,7 @@ import org.junit.Test;
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.2.0
  */
-@SuppressWarnings("checkstyle:MethodName")
+@SuppressWarnings({"checkstyle:MethodName", "checkstyle:MultipleStringLiterals"})
 public final class MojoTest {
   /**
    * Writes git log to XML. The file should have all entries from the git log.
@@ -66,6 +67,30 @@ public final class MojoTest {
         String.format("//commit[id = '%s']/message[full = 'Second commit']", second.getId().getName())
       )
     );
+  }
+
+  /**
+   * Must fail if a path is given for a directory that is not a git repo.
+   * 
+   * @throws Exception the expected error
+   * @since 0.2.0
+   */
+  @Test(expected = MojoFailureException.class)
+  public void failsWithInvalidPathToRepo() throws Exception {
+    new Mojo(Files.createTempDirectory("").toFile(), new File("log.xml")).execute();
+  }
+
+  /**
+   * Must fail if a directory path is given as the output xml.
+   * 
+   * @throws Exception the expected error
+   * @since 0.2.0
+   */
+  @Test(expected = MojoFailureException.class)
+  public void failsWithInvalidPathToOutputXml() throws Exception {
+    final File dir = Files.createTempDirectory("").toFile();
+    final File xml = Files.createTempDirectory("").toFile();
+    new Mojo(dir, xml).execute();
   }
 
   /**

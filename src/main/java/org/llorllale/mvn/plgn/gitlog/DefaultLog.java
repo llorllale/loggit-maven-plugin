@@ -52,16 +52,20 @@ final class DefaultLog implements Log {
 
   @Override
   public Iterable<Commit> commits() throws IOException {
-    final RevWalk walk = new RevWalk(this.repo);
-    walk.markStart(
-      walk.parseCommit(
-        Objects.requireNonNull(this.ref, "null ref!").getObjectId()
-      )
-    );
-    return new Mapped<>(
-      DefaultCommit::new,
-      walk
-    );
+    try {
+      final RevWalk walk = new RevWalk(this.repo);
+      walk.markStart(
+        walk.parseCommit(
+          Objects.requireNonNull(this.ref, "null ref!").getObjectId()
+        )
+      );
+      return new Mapped<>(
+        DefaultCommit::new,
+        walk
+      );
+    } catch (NullPointerException e) {
+      throw new IOException("Invalid ref provided", e);
+    }
   }
 
   @Override
