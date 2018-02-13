@@ -19,6 +19,7 @@ package org.llorllale.mvn.plgn.gitlog;
 import java.io.IOException;
 import java.nio.file.Path;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -45,7 +46,7 @@ final class DefaultGit implements Git {
     final Repository repo = new FileRepository(this.path.toFile());
     return new DefaultLog(
       repo,
-      repo.findRef("master")
+      repo.findRef(Constants.MASTER)
     );
   }
 }

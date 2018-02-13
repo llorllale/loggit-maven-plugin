@@ -21,12 +21,14 @@ This project includes:
 
   ANTLR 3 Runtime under BSD licence
   Apache Commons Codec under The Apache Software License, Version 2.0
+  Apache Commons Lang under Apache License, Version 2.0
   Apache Commons Logging under The Apache Software License, Version 2.0
   Apache HttpClient under Apache License, Version 2.0
   Apache HttpCore under Apache License, Version 2.0
   AspectJ runtime under Eclipse Public License - v 1.0
   Bean Validation API under The Apache Software License, Version 2.0
   cactoos under MIT
+  CDI APIs under Apache License, Version 2.0
   Extended StAX API under Dual license consisting of the CDDL v1.1 and GPL v2
   fastinfoset under Apache License, Version 2.0
   gitlog-maven-plugin under Apache License, Version 2.0
@@ -35,6 +37,7 @@ This project includes:
   istack common utility code runtime under CDDL 1.1 or GPL2 w/ CPE
   Java Architecture for XML Binding under CDDL 1.1 or GPL2 w/ CPE
   JavaEWAH under Apache 2
+  javax.inject under The Apache Software License, Version 2.0
   JAXB Core under CDDL+GPL License
   JAXB Runtime under CDDL+GPL License
   jcabi-aspects under BSD
@@ -44,7 +47,17 @@ This project includes:
   jcabi-xml under BSD
   JGit - Core under Eclipse Distribution License (New BSD License)
   JSch under Revised BSD
+  JSR-250 Common Annotations for the JavaTM Platform under COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
   JUnit under Eclipse Public License 1.0
+  Maven Artifact under Apache License, Version 2.0
+  Maven Model under Apache License, Version 2.0
+  Maven Plugin API under Apache License, Version 2.0
+  Maven Plugin Tools Java 5 Annotations under Apache License, Version 2.0
+  org.eclipse.sisu.inject under Eclipse Public License, Version 1.0
+  org.eclipse.sisu.plexus under Eclipse Public License, Version 1.0
+  Plexus :: Component Annotations under The Apache Software License, Version 2.0
+  Plexus Classworlds under The Apache Software License, Version 2.0
+  Plexus Common Utilities under Apache License, Version 2.0
   SLF4J API Module under MIT License
   TXW2 Runtime under CDDL+GPL License
   xembly under BSD
