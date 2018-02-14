@@ -16,6 +16,7 @@
 
 package org.llorllale.mvn.plgn.gitlog;
 
+import com.jcabi.xml.XML;
 import java.io.File;
 import java.io.IOException;
 import org.apache.maven.plugin.AbstractMojo;
@@ -28,6 +29,7 @@ import org.cactoos.io.OutputTo;
 import org.cactoos.io.TeeInput;
 import org.cactoos.scalar.IoCheckedScalar;
 import org.eclipse.jgit.lib.Constants;
+import org.llorllale.mvn.plgn.gitlog.xsl.Identity;
 
 /**
  * Mojo.
@@ -70,7 +72,9 @@ public final class Mojo extends AbstractMojo {
         new LengthOf(
           new TeeInput(
             new InputOf(
-              new DefaultGit(this.repo.toPath().resolve(Constants.DOT_GIT)).log().asXml().toString()
+              this.transform(
+                new DefaultGit(this.repo.toPath().resolve(Constants.DOT_GIT)).log().asXml()
+              )
             ),
             new OutputTo(this.xml)
           )
@@ -82,5 +86,16 @@ public final class Mojo extends AbstractMojo {
         e
       );
     }
+  }
+
+  /**
+   * Transforms the XML using a stylesheet.
+   * 
+   * @param original the original XML
+   * @return the transformed XML
+   * @throws IOException if there's an issue reading the stylesheet
+   */
+  private String transform(XML original) throws IOException {
+    return new Identity().applyTo(original);
   }
 }

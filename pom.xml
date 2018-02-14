@@ -291,6 +291,14 @@
           <include>*.xsd</include>
         </includes>
       </resource>
+      <resource>
+        <directory>${basedir}/src/main/resources/xsl</directory>
+        <filtering>false</filtering>
+        <targetPath>xsl</targetPath>
+        <includes>
+          <include>*.xsl</include>
+        </includes>
+      </resource>
     </resources>
     <pluginManagement>
       <plugins>
@@ -381,16 +389,10 @@
             </formats>
             <instrumentation>
               <ignores>
-                <ignore>org.llorllale.youtrack.api.HttpRequestWithEntity</ignore>
-                <ignore>org.llorllale.youtrack.api.HttpRequestWithSession</ignore>
-                <ignore>org.llorllale.youtrack.api.StreamOf</ignore>
-                <ignore>org.llorllale.youtrack.api.StringAsDocument</ignore>
+                <ignore>org.llorllale.mvn.plgn.gitlog.xsl.StylesheetEnvelope</ignore>
               </ignores>
               <excludes>
-                <exclude>org/llorllale/youtrack/api/HttpRequestWithEntity.class</exclude>
-                <exclude>org/llorllale/youtrack/api/HttpRequestWithSession.class</exclude>
-                <exclude>org/llorllale/youtrack/api/StreamOf.class</exclude>
-                <exclude>org/llorllale/youtrack/api/StringAsDocument.class</exclude>
+                <exclude>org/llorllale/mvn/plgn/gitlog/xsl/StylesheetEnvelope.class</exclude>
               </excludes>
             </instrumentation>
           </configuration>

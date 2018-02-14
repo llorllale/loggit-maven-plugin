@@ -14,36 +14,21 @@
  * limitations under the License.
  */
 
-package org.llorllale.mvn.plgn.gitlog;
-
-import com.jcabi.xml.XSD;
-import com.jcabi.xml.XSDDocument;
-import java.util.Collection;
-import javax.xml.transform.Source;
-import org.xml.sax.SAXParseException;
+package org.llorllale.mvn.plgn.gitlog.xsl;
 
 /**
- * The XML schema for the intermediate transformation stage.
+ * Creates an identical copy of the XML.
  *
  * @author George Aristy (george.aristy@gmail.com)
- * @since 0.1.0
+ * @since 0.2.0
  */
-public final class Schema implements XSD {
-  private final String schemaFile;
-
+public final class Identity extends StylesheetEnvelope {
   /**
    * Ctor.
    * 
-   * @since 0.1.0
+   * @since 0.2.0
    */
-  Schema() {
-    this.schemaFile = "/xsd/schema.xsd";
-  }
-
-  @Override
-  public Collection<SAXParseException> validate(Source xml) {
-    return XSDDocument.make(
-      Schema.class.getResourceAsStream(this.schemaFile)
-    ).validate(xml);
+  public Identity() {
+    super("/xsl/identity.xsl");
   }
 }
