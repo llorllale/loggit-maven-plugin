@@ -14,23 +14,39 @@
  * limitations under the License.
  */
 
-package org.llorllale.mvn.plgn.gitlog;
+package org.llorllale.mvn.plgn.loggit;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Repository;
 
 /**
- * A git repo.
+ * Default impl of {@link Git}.
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.1.0
  */
-public interface Git {
+final class DefaultGit implements Git {
+  private final Path path;
+
   /**
-   * The log of this Git repo.
+   * Ctor.
    * 
-   * @return this git repo's log
-   * @throws IOException if an I/O error occurs
+   * @param path path to the repo's dir
    * @since 0.1.0
    */
-  Log log() throws IOException;
+  DefaultGit(Path path) {
+    this.path = path;
+  }
+
+  @Override
+  public Log log() throws IOException {
+    final Repository repo = new FileRepository(this.path.toFile());
+    return new DefaultLog(
+      repo,
+      repo.findRef(Constants.MASTER)
+    );
+  }
 }

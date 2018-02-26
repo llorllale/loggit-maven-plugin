@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.llorllale.mvn.plgn.gitlog;
+package org.llorllale.mvn.plgn.loggit;
 
 import com.jcabi.xml.XSD;
 import com.jcabi.xml.XSDDocument;

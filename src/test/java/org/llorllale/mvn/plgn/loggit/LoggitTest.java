@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.llorllale.mvn.plgn.gitlog;
+package org.llorllale.mvn.plgn.loggit;
 
 // @checkstyle AvoidStaticImport (2 lines)
 import static com.jcabi.matchers.XhtmlMatchers.hasXPaths;
@@ -30,13 +30,13 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.junit.Test;
 
 /**
- * Tests for {@link Mojo}.
+ * Tests for {@link Loggit}.
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.2.0
  */
 @SuppressWarnings({"checkstyle:MethodName", "checkstyle:MultipleStringLiterals"})
-public final class MojoTest {
+public final class LoggitTest {
   /**
    * Writes git log to XML. The file should have all entries from the git log.
    * 
@@ -49,7 +49,7 @@ public final class MojoTest {
     final RevCommit first = this.addCommit(repo, "first", "first@test.com", "First commit");
     final RevCommit second = this.addCommit(repo, "second", "second@test.com", "Second commit");
     final File output = repo.getRepository().getWorkTree().toPath().resolve("log.xml").toFile();
-    new Mojo(
+    new Loggit(
       repo.getRepository().getWorkTree(),
       output
     ).execute();
@@ -77,7 +77,7 @@ public final class MojoTest {
    */
   @Test(expected = MojoFailureException.class)
   public void failsWithInvalidPathToRepo() throws Exception {
-    new Mojo(Files.createTempDirectory("").toFile(), new File("log.xml")).execute();
+    new Loggit(Files.createTempDirectory("").toFile(), new File("log.xml")).execute();
   }
 
   /**
@@ -90,7 +90,7 @@ public final class MojoTest {
   public void failsWithInvalidPathToOutputXml() throws Exception {
     final File dir = Files.createTempDirectory("").toFile();
     final File xml = Files.createTempDirectory("").toFile();
-    new Mojo(dir, xml).execute();
+    new Loggit(dir, xml).execute();
   }
 
   /**

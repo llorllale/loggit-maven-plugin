@@ -14,22 +14,23 @@
  * limitations under the License.
  */
 
-package org.llorllale.mvn.plgn.gitlog;
+package org.llorllale.mvn.plgn.loggit;
 
-import com.jcabi.xml.XML;
+import java.io.IOException;
 
 /**
- * A git commit.
+ * A git repo.
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.1.0
  */
-public interface Commit {
+public interface Git {
   /**
-   * This {@link Commit} as XML.
+   * The log of this Git repo.
    * 
-   * @return this {@link Commit} as XML
+   * @return this git repo's log
+   * @throws IOException if an I/O error occurs
    * @since 0.1.0
    */
-  XML asXml();
+  Log log() throws IOException;
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.llorllale.mvn.plgn.gitlog;
+package org.llorllale.mvn.plgn.loggit;
 
 // @checkstyle AvoidStaticImport (4 lines)
 import static com.jcabi.matchers.XhtmlMatchers.hasXPath;

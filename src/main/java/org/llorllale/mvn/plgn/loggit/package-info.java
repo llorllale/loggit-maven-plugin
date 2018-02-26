@@ -14,21 +14,9 @@
  * limitations under the License.
  */
 
-package org.llorllale.mvn.plgn.gitlog.xsl;
-
 /**
- * Creates an identical copy of the XML.
+ * Gitlog maven plugin.
  *
- * @author George Aristy (george.aristy@gmail.com)
- * @since 0.2.0
+ * @since 0.1.0
  */
-public final class Identity extends StylesheetEnvelope {
-  /**
-   * Ctor.
-   * 
-   * @since 0.2.0
-   */
-  public Identity() {
-    super("/xsl/identity.xsl");
-  }
-}
+package org.llorllale.mvn.plgn.loggit;

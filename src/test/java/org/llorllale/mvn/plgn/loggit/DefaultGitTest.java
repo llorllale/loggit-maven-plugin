@@ -14,9 +14,33 @@
  * limitations under the License.
  */
 
+package org.llorllale.mvn.plgn.loggit;
+
+// @checkstyle AvoidStaticImport (1 line)
+import static org.junit.Assert.assertNotNull;
+
+import java.io.IOException;
+import java.nio.file.Paths;
+import org.junit.Test;
+
 /**
- * Tests.
- * 
+ * Unit tests for {@link DefaultGit}.
+ *
+ * @author George Aristy (george.aristy@gmail.com)
  * @since 0.1.0
  */
-package org.llorllale.mvn.plgn.gitlog;
+public final class DefaultGitTest {
+
+  /**
+   * Log returns a reference.
+   * 
+   * @throws IOException unexpected
+   * @since 0.1.0
+   */
+  @Test
+  public void logIsNotNull() throws IOException {
+    assertNotNull(
+      new DefaultGit(Paths.get(".")).log()
+    );
+  }
+}

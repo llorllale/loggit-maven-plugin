@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.llorllale.mvn.plgn.gitlog.mock;
+package org.llorllale.mvn.plgn.loggit.mock;
 
 import java.io.IOException;
 import java.util.Collections;

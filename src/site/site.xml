@@ -36,7 +36,7 @@
       <brand>
         <name>
           <![CDATA[
-            gitlog-maven-plugin <img src="images/icon_32.png"/>
+            loggit-maven-plugin <img src="images/icon_32.png"/>
           ]]>
         </name>
         <href>./index.html</href>
@@ -63,16 +63,16 @@
   <body>
     <links>
       <item name="About" href="./index.html"/>
-      <item name="View on GitHub" href="http://github.com/llorllale/gitlog-maven-plugin"/>
+      <item name="View on GitHub" href="http://github.com/llorllale/loggit-maven-plugin"/>
     </links>
 
     <menu name="Documentation">
-      <item name="JavaDocs ${project.version}" href="http://javadoc.io/doc/org.llorllale/gitlog-maven-plugin"/>
+      <item name="JavaDocs ${project.version}" href="http://javadoc.io/doc/org.llorllale/loggit-maven-plugin"/>
     </menu>
 
     <menu name="Project">
-      <item name="Releases" href="http://github.com/llorllale/gitlog-maven-plugin/releases"/>
-      <item name="Issue Tracking" href="http://github.com/llorllale/gitlog-maven-plugin/issues"/>
+      <item name="Releases" href="http://github.com/llorllale/loggit-maven-plugin/releases"/>
+      <item name="Issue Tracking" href="http://github.com/llorllale/loggit-maven-plugin/issues"/>
       <item name="License" href="./license.html"/>
       <item name="Members" href="./team-list.html"/>
       <item name="CheckStyle Report" href="./checkstyle.html"/>

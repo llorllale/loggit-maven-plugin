@@ -14,9 +14,33 @@
  * limitations under the License.
  */
 
+package org.llorllale.mvn.plgn.loggit;
+
+import com.jcabi.xml.XML;
+import java.io.IOException;
+
 /**
- * Mock implementations of several dependencies.
- * 
+ * A {@link Git} repo's log.
+ *
+ * @author George Aristy (george.aristy@gmail.com)
  * @since 0.1.0
  */
-package org.llorllale.mvn.plgn.gitlog.mock;
+public interface Log {
+  /**
+   * Commits from this log.
+   * 
+   * @return commits from this log
+   * @throws IOException if error reading git repo
+   * @since 0.1.0
+   */
+  Iterable<Commit> commits() throws IOException;
+
+  /**
+   * This {@link Log} as XML.
+   * 
+   * @return an XML view of this {@link Log}
+   * @throws IOException if error reading git repo
+   * @since 0.1.0
+   */
+  XML asXml() throws IOException;
+}

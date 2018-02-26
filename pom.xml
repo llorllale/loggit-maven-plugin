@@ -21,14 +21,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.llorllale</groupId>
-  <artifactId>gitlog-maven-plugin</artifactId>
+  <artifactId>loggit-maven-plugin</artifactId>
   <version>0.2.0-SNAPSHOT</version>
 
   <packaging>jar</packaging>
 
-  <name>gitlog-maven-plugin</name>
+  <name>loggit-maven-plugin</name>
   <description>Generates changelog and release notes for projects using git.</description>
-  <url>https://github.com/llorllale/gitlog-maven-plugin</url>
+  <url>https://github.com/llorllale/loggit-maven-plugin</url>
   <inceptionYear>2018</inceptionYear>
 
   <organization>
@@ -60,18 +60,18 @@
 
   <issueManagement>
     <system>GitHub</system>
-    <url>https://github.com/llorllale/gitlog-maven-plugin/issues</url>
+    <url>https://github.com/llorllale/loggit-maven-plugin/issues</url>
   </issueManagement>
 
   <scm>
-    <connection>scm:git:git@github.com:llorllale/gitlog-maven-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:llorllale/gitlog-maven-plugin.git</developerConnection>
-    <url>https://github.com/llorllale/gitlog-maven-plugin</url>
+    <connection>scm:git:git@github.com:llorllale/loggit-maven-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:llorllale/loggit-maven-plugin.git</developerConnection>
+    <url>https://github.com/llorllale/loggit-maven-plugin</url>
   </scm>
 
   <ciManagement>
     <system>Travis CI</system>
-    <url>https://travis-ci.org/llorllale/gitlog-maven-plugin</url>
+    <url>https://travis-ci.org/llorllale/loggit-maven-plugin</url>
   </ciManagement>
 
   <distributionManagement>
@@ -389,10 +389,10 @@
             </formats>
             <instrumentation>
               <ignores>
-                <ignore>org.llorllale.mvn.plgn.gitlog.xsl.StylesheetEnvelope</ignore>
+                <ignore>org.llorllale.mvn.plgn.loggit.xsl.StylesheetEnvelope</ignore>
               </ignores>
               <excludes>
-                <exclude>org/llorllale/mvn/plgn/gitlog/xsl/StylesheetEnvelope.class</exclude>
+                <exclude>org/llorllale/mvn/plgn/loggit/xsl/StylesheetEnvelope.class</exclude>
               </excludes>
             </instrumentation>
           </configuration>

@@ -14,39 +14,22 @@
  * limitations under the License.
  */
 
-package org.llorllale.mvn.plgn.gitlog;
+package org.llorllale.mvn.plgn.loggit;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Repository;
+import com.jcabi.xml.XML;
 
 /**
- * Default impl of {@link Git}.
+ * A git commit.
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.1.0
  */
-final class DefaultGit implements Git {
-  private final Path path;
-
+public interface Commit {
   /**
-   * Ctor.
+   * This {@link Commit} as XML.
    * 
-   * @param path path to the repo's dir
+   * @return this {@link Commit} as XML
    * @since 0.1.0
    */
-  DefaultGit(Path path) {
-    this.path = path;
-  }
-
-  @Override
-  public Log log() throws IOException {
-    final Repository repo = new FileRepository(this.path.toFile());
-    return new DefaultLog(
-      repo,
-      repo.findRef(Constants.MASTER)
-    );
-  }
+  XML asXml();
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.llorllale.mvn.plgn.gitlog;
+package org.llorllale.mvn.plgn.loggit;
 
 import com.jcabi.xml.XML;
 import java.io.File;
@@ -29,15 +29,15 @@ import org.cactoos.io.OutputTo;
 import org.cactoos.io.TeeInput;
 import org.cactoos.scalar.IoCheckedScalar;
 import org.eclipse.jgit.lib.Constants;
-import org.llorllale.mvn.plgn.gitlog.xsl.Identity;
+import org.llorllale.mvn.plgn.loggit.xsl.Identity;
 
 /**
- * Mojo.
+ * Loggit.
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.2.0
  */
-public final class Mojo extends AbstractMojo {
+public final class Loggit extends AbstractMojo {
   @Parameter(name = "repo", defaultValue = "${basedir}")
   private File repo;
 
@@ -49,7 +49,7 @@ public final class Mojo extends AbstractMojo {
    * 
    * @since 0.2.0
    */
-  public Mojo() {
+  public Loggit() {
     //intentional
   }
 
@@ -60,7 +60,7 @@ public final class Mojo extends AbstractMojo {
    * @param output file to which to save the XML
    * @since 0.2.0
    */
-  public Mojo(File repo, File output) {
+  public Loggit(File repo, File output) {
     this.repo = repo;
     this.xml = output;
   }

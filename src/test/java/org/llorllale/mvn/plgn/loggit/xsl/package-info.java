@@ -15,8 +15,8 @@
  */
 
 /**
- * Gitlog maven plugin.
+ * Tests for stylesheets.
  *
- * @since 0.1.0
+ * @since 0.2.0
  */
-package org.llorllale.mvn.plgn.gitlog;
+package org.llorllale.mvn.plgn.loggit.xsl;

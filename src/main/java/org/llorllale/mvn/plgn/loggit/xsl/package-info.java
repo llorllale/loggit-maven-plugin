@@ -19,4 +19,4 @@
  *
  * @since 0.2.0
  */
-package org.llorllale.mvn.plgn.gitlog.xsl;
+package org.llorllale.mvn.plgn.loggit.xsl;

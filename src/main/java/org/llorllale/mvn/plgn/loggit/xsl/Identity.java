@@ -14,9 +14,21 @@
  * limitations under the License.
  */
 
+package org.llorllale.mvn.plgn.loggit.xsl;
+
 /**
- * Tests for stylesheets.
+ * Creates an identical copy of the XML.
  *
+ * @author George Aristy (george.aristy@gmail.com)
  * @since 0.2.0
  */
-package org.llorllale.mvn.plgn.gitlog.xsl;
+public final class Identity extends StylesheetEnvelope {
+  /**
+   * Ctor.
+   * 
+   * @since 0.2.0
+   */
+  public Identity() {
+    super("/xsl/identity.xsl");
+  }
+}
