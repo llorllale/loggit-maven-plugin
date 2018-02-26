@@ -22,6 +22,7 @@ import java.io.IOException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.cactoos.io.InputOf;
 import org.cactoos.io.LengthOf;
@@ -32,12 +33,13 @@ import org.eclipse.jgit.lib.Constants;
 import org.llorllale.mvn.plgn.loggit.xsl.Identity;
 
 /**
- * Loggit.
+ * Changelog.
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.2.0
  */
-public final class Loggit extends AbstractMojo {
+@Mojo(name = "changelog")
+public final class Changelog extends AbstractMojo {
   @Parameter(name = "repo", defaultValue = "${basedir}")
   private File repo;
 
@@ -49,7 +51,7 @@ public final class Loggit extends AbstractMojo {
    * 
    * @since 0.2.0
    */
-  public Loggit() {
+  public Changelog() {
     //intentional
   }
 
@@ -60,7 +62,7 @@ public final class Loggit extends AbstractMojo {
    * @param output file to which to save the XML
    * @since 0.2.0
    */
-  public Loggit(File repo, File output) {
+  public Changelog(File repo, File output) {
     this.repo = repo;
     this.xml = output;
   }

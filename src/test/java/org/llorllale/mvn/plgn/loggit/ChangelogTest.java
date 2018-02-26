@@ -30,13 +30,13 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.junit.Test;
 
 /**
- * Tests for {@link Loggit}.
+ * Tests for {@link Changelog}.
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.2.0
  */
 @SuppressWarnings({"checkstyle:MethodName", "checkstyle:MultipleStringLiterals"})
-public final class LoggitTest {
+public final class ChangelogTest {
   /**
    * Writes git log to XML. The file should have all entries from the git log.
    * 
@@ -49,7 +49,7 @@ public final class LoggitTest {
     final RevCommit first = this.addCommit(repo, "first", "first@test.com", "First commit");
     final RevCommit second = this.addCommit(repo, "second", "second@test.com", "Second commit");
     final File output = repo.getRepository().getWorkTree().toPath().resolve("log.xml").toFile();
-    new Loggit(
+    new Changelog(
       repo.getRepository().getWorkTree(),
       output
     ).execute();
@@ -77,7 +77,7 @@ public final class LoggitTest {
    */
   @Test(expected = MojoFailureException.class)
   public void failsWithInvalidPathToRepo() throws Exception {
-    new Loggit(Files.createTempDirectory("").toFile(), new File("log.xml")).execute();
+    new Changelog(Files.createTempDirectory("").toFile(), new File("log.xml")).execute();
   }
 
   /**
@@ -90,7 +90,7 @@ public final class LoggitTest {
   public void failsWithInvalidPathToOutputXml() throws Exception {
     final File dir = Files.createTempDirectory("").toFile();
     final File xml = Files.createTempDirectory("").toFile();
-    new Loggit(dir, xml).execute();
+    new Changelog(dir, xml).execute();
   }
 
   /**
