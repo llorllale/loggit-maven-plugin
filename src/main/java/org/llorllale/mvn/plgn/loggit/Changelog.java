@@ -31,6 +31,7 @@ import org.cactoos.io.TeeInput;
 import org.cactoos.scalar.IoCheckedScalar;
 import org.eclipse.jgit.lib.Constants;
 import org.llorllale.mvn.plgn.loggit.xsl.Identity;
+import org.llorllale.mvn.plgn.loggit.xsl.Markdown;
 
 /**
  * Changelog.
@@ -45,6 +46,9 @@ public final class Changelog extends AbstractMojo {
 
   @Parameter(name = "outputFile", defaultValue = "gitlog.xml")
   private File xml;
+
+  @Parameter(name = "format", defaultValue = "default")
+  private String format;
 
   /**
    * Ctor.
@@ -63,8 +67,21 @@ public final class Changelog extends AbstractMojo {
    * @since 0.2.0
    */
   public Changelog(File repo, File output) {
+    this(repo, output, "default");
+  }
+
+  /**
+   * Ctor.
+   * 
+   * @param repo path to git repo
+   * @param output file to which to save the XML
+   * @param format the format for the output
+   * @since 0.2.0
+   */
+  public Changelog(File repo, File output, String format) {
     this.repo = repo;
     this.xml = output;
+    this.format = format;
   }
 
   @Override
@@ -98,6 +115,15 @@ public final class Changelog extends AbstractMojo {
    * @throws IOException if there's an issue reading the stylesheet
    */
   private String transform(XML original) throws IOException {
-    return new Identity().applyTo(original);
+    final String output;
+    switch (this.format) {
+      case "markdown":
+        output = new Markdown().applyTo(original);
+        break;
+      default:
+        output = new Identity().applyTo(original);
+        break;
+    }
+    return output;
   }
 }

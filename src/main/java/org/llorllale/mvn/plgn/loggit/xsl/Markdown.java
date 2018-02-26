@@ -16,37 +16,19 @@
 
 package org.llorllale.mvn.plgn.loggit.xsl;
 
-// @checkstyle AvoidStaticImport (2 lines)
-import static com.jcabi.matchers.XhtmlMatchers.hasXPaths;
-import static org.junit.Assert.assertThat;
-
-import com.jcabi.xml.XMLDocument;
-import org.junit.Test;
-
 /**
- * Tests for {@link Identity}.
+ * Default markdown transformation.
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.2.0
  */
-@SuppressWarnings("checkstyle:MethodName")
-public final class IdentityTest {
+public final class Markdown extends StylesheetEnvelope {
   /**
-   * Output must be the same as input.
+   * Ctor.
    * 
    * @since 0.2.0
    */
-  @Test
-  public void noChangesToXml() {
-    assertThat(
-      new Identity().transform(
-        new XMLDocument("<doc><id>1</id><author>George</author><email>email@test.com</email></doc>")
-      ),
-      hasXPaths(
-        "/doc[id = 1]",
-        "/doc[author = 'George']",
-        "/doc[email = 'email@test.com']"
-      )
-    );
+  public Markdown() {
+    super("/xsl/markdown.xsl");
   }
 }
