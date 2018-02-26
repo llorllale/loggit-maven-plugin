@@ -38,6 +38,9 @@ import org.llorllale.mvn.plgn.loggit.xsl.Markdown;
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.2.0
+ * @todo #47:30min Implement some way to accept custom transformation files. The default
+ *  markdown transformation may not suit everyone. Things like date formats and other
+ *  stuff can go there.
  */
 @Mojo(name = "changelog")
 public final class Changelog extends AbstractMojo {
