@@ -1,10 +1,10 @@
-# gitlog-maven-plugin ![icon](/src/site/resources/images/icon_64.png)
+# loggit-maven-plugin ![icon](/src/site/resources/images/icon_64.png)
 
-[![codecov](https://codecov.io/gh/llorllale/gitlog-maven-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/llorllale/gitlog-maven-plugin)
-[![Build Status](https://travis-ci.org/llorllale/gitlog-maven-plugin.svg?branch=master)](https://travis-ci.org/llorllale/gitlog-maven-plugin)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.llorllale/gitlog-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.llorllale/gitlog-maven-plugin)
-[![PDD status](http://www.0pdd.com/svg?name=llorllale/gitlog-maven-plugin)](http://www.0pdd.com/p?name=llorllale/gitlog-maven-plugin)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://llorllale.github.io/gitlog-maven-plugin/license.html)
+[![codecov](https://codecov.io/gh/llorllale/loggit-maven-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/llorllale/loggit-maven-plugin)
+[![Build Status](https://travis-ci.org/llorllale/loggit-maven-plugin.svg?branch=master)](https://travis-ci.org/llorllale/loggit-maven-plugin)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.llorllale/loggit-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.llorllale/loggit-maven-plugin)
+[![PDD status](http://www.0pdd.com/svg?name=llorllale/loggit-maven-plugin)](http://www.0pdd.com/p?name=llorllale/loggit-maven-plugin)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://llorllale.github.io/loggit-maven-plugin/license.html)
 
 ## Why another changelog plugin?
 None of the other changelog plugins has the combinations of features that I need:
@@ -13,13 +13,13 @@ None of the other changelog plugins has the combinations of features that I need
 * Project activity
 
 ## Feedback
-Please direct any questions, feature requests or bugs to the [issue tracker](https://github.com/llorllale/gitlog-maven-plugin/issues/).
+Please direct any questions, feature requests or bugs to the [issue tracker](https://github.com/llorllale/loggit-maven-plugin/issues/).
 
 ## How to contribute?
 See [CONTRIBUTING](./CONTRIBUTING.md).
 
 ## License
-`gitlog-maven-plugin` is licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0). A copy of the license has been included
+`loggit-maven-plugin` is licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0). A copy of the license has been included
 in [LICENSE](./LICENSE).
 
 <br/>
