@@ -33,14 +33,14 @@ import org.eclipse.jgit.lib.Constants;
 import org.llorllale.mvn.plgn.loggit.xsl.Identity;
 import org.llorllale.mvn.plgn.loggit.xsl.Markdown;
 
+// @todo #47:30min Implement some way to accept custom transformation files. The default
+//  markdown transformation may not suit everyone. Things like date formats and other
+//  stuff can go there.
 /**
  * Changelog.
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.2.0
- * @todo #47:30min Implement some way to accept custom transformation files. The default
- *  markdown transformation may not suit everyone. Things like date formats and other
- *  stuff can go there.
  */
 @Mojo(name = "changelog")
 public final class Changelog extends AbstractMojo {
@@ -119,13 +119,10 @@ public final class Changelog extends AbstractMojo {
    */
   private String transform(XML original) throws IOException {
     final String output;
-    switch (this.format) {
-      case "markdown":
-        output = new Markdown().applyTo(original);
-        break;
-      default:
-        output = new Identity().applyTo(original);
-        break;
+    if ("markdown".equals(this.format)) {
+      output = new Markdown().applyTo(original);
+    } else {
+      output = new Identity().applyTo(original);
     }
     return output;
   }
