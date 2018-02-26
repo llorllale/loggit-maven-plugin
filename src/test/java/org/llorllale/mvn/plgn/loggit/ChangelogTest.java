@@ -16,8 +16,9 @@
 
 package org.llorllale.mvn.plgn.loggit;
 
-// @checkstyle AvoidStaticImport (2 lines)
+// @checkstyle AvoidStaticImport (3 lines)
 import static com.jcabi.matchers.XhtmlMatchers.hasXPaths;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.junit.Assert.assertThat;
 
 import java.io.File;
@@ -91,6 +92,28 @@ public final class ChangelogTest {
     final File dir = Files.createTempDirectory("").toFile();
     final File xml = Files.createTempDirectory("").toFile();
     new Changelog(dir, xml).execute();
+  }
+
+  /**
+   * Must output to default markdown format if "markdown" is the given format.
+   * 
+   * @throws Exception unexpected
+   * @since 0.2.0
+   */
+  @Test
+  public void defaultMarkdownOutput() throws Exception {
+    final org.eclipse.jgit.api.Git repo = this.repo();
+    this.addCommit(repo, "first", "first@test.com", "First commit");
+    this.addCommit(repo, "second", "second@test.com", "Second commit");
+    final File output = repo.getRepository().getWorkTree().toPath().resolve("log.xml").toFile();
+    new Changelog(
+      repo.getRepository().getWorkTree(),
+      output, "markdown"
+    ).execute();
+    assertThat(
+      new TextOf(output).asString(),
+      startsWith("# CHANGELOG")
+    );
   }
 
   /**
