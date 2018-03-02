@@ -16,6 +16,8 @@
 
 package org.llorllale.mvn.plgn.loggit.xsl;
 
+import org.cactoos.io.ResourceOf;
+
 /**
  * Default markdown transformation.
  *
@@ -29,6 +31,6 @@ public final class Markdown extends StylesheetEnvelope {
    * @since 0.2.0
    */
   public Markdown() {
-    super("/xsl/markdown.xsl");
+    super(new ResourceOf("xsl/markdown.xsl"));
   }
 }

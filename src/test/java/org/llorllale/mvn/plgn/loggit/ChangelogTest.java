@@ -16,8 +16,9 @@
 
 package org.llorllale.mvn.plgn.loggit;
 
-// @checkstyle AvoidStaticImport (3 lines)
+// @checkstyle AvoidStaticImport (4 lines)
 import static com.jcabi.matchers.XhtmlMatchers.hasXPaths;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.junit.Assert.assertThat;
 
@@ -113,6 +114,29 @@ public final class ChangelogTest {
     assertThat(
       new TextOf(output).asString(),
       startsWith("# CHANGELOG")
+    );
+  }
+
+  /**
+   * Uses custom transformation.
+   * 
+   * @throws Exception unexpected
+   * @since 0.2.0
+   */
+  @Test
+  public void customOutput() throws Exception {
+    final org.eclipse.jgit.api.Git repo = this.repo();
+    this.addCommit(repo, "first", "first@test.com", "First commit");
+    this.addCommit(repo, "second", "second@test.com", "Second commit");
+    final File output = repo.getRepository().getWorkTree().toPath().resolve("log.xml").toFile();
+    new Changelog(
+      repo.getRepository().getWorkTree(),
+      output, "custom",
+      new File("src/test/resources/org/llorllale/mvn/plgn/loggit/changelogtest.xsl")
+    ).execute();
+    assertThat(
+      new TextOf(output).asString(),
+      containsString("second,first")
     );
   }
 

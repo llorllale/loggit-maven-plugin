@@ -20,6 +20,7 @@ import com.jcabi.xml.Sources;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XSL;
 import com.jcabi.xml.XSLDocument;
+import org.cactoos.Input;
 import org.cactoos.scalar.StickyScalar;
 import org.cactoos.scalar.UncheckedScalar;
 
@@ -35,13 +36,13 @@ abstract class StylesheetEnvelope implements XSL {
   /**
    * Ctor.
    * 
-   * @param file path to the XSL file
+   * @param input the XSL file
    * @since 0.2.0
    */
-  StylesheetEnvelope(String file) {
+  StylesheetEnvelope(Input input) {
     this.stylesheet = new UncheckedScalar<>(
       new StickyScalar<>(
-        () -> new XSLDocument(this.getClass().getResourceAsStream(file))
+        () -> new XSLDocument(input.stream())
       )
     );
   }

@@ -30,12 +30,10 @@ import org.cactoos.io.OutputTo;
 import org.cactoos.io.TeeInput;
 import org.cactoos.scalar.IoCheckedScalar;
 import org.eclipse.jgit.lib.Constants;
+import org.llorllale.mvn.plgn.loggit.xsl.Custom;
 import org.llorllale.mvn.plgn.loggit.xsl.Identity;
 import org.llorllale.mvn.plgn.loggit.xsl.Markdown;
 
-// @todo #47:30min Implement some way to accept custom transformation files. The default
-//  markdown transformation may not suit everyone. Things like date formats and other
-//  stuff can go there.
 /**
  * Changelog.
  *
@@ -52,6 +50,9 @@ public final class Changelog extends AbstractMojo {
 
   @Parameter(name = "format", defaultValue = "default")
   private String format;
+
+  @Parameter(name = "customFormatFile")
+  private File customFormat;
 
   /**
    * Ctor.
@@ -82,9 +83,23 @@ public final class Changelog extends AbstractMojo {
    * @since 0.2.0
    */
   public Changelog(File repo, File output, String format) {
+    this(repo, output, format, null);
+  }
+
+  /**
+   * Ctor.
+   * 
+   * @param repo path to git repo
+   * @param output file to which to save the XML
+   * @param format the format for the output
+   * @param customFormat path to customFormat
+   * @since 0.2.0
+   */
+  public Changelog(File repo, File output, String format, File customFormat) {
     this.repo = repo;
     this.xml = output;
     this.format = format;
+    this.customFormat = customFormat;
   }
 
   @Override
@@ -121,6 +136,8 @@ public final class Changelog extends AbstractMojo {
     final String output;
     if ("markdown".equals(this.format)) {
       output = new Markdown().applyTo(original);
+    } else if ("custom".equals(this.format)) {
+      output = new Custom(new InputOf(this.customFormat)).applyTo(original);
     } else {
       output = new Identity().applyTo(original);
     }

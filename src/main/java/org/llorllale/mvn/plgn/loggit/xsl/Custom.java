@@ -16,21 +16,22 @@
 
 package org.llorllale.mvn.plgn.loggit.xsl;
 
-import org.cactoos.io.ResourceOf;
+import org.cactoos.Input;
 
 /**
- * Creates an identical copy of the XML.
+ * Custom XSLT provided by the user.
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.2.0
  */
-public final class Identity extends StylesheetEnvelope {
+public final class Custom extends StylesheetEnvelope {
   /**
    * Ctor.
    * 
+   * @param custom the custom XSLT
    * @since 0.2.0
    */
-  public Identity() {
-    super(new ResourceOf("xsl/identity.xsl"));
+  public Custom(Input custom) {
+    super(custom);
   }
 }
