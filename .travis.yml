@@ -18,7 +18,7 @@ jobs:
             mvn clean cobertura:cobertura && 
             mvn -DskipTests=true cobertura:check && 
             bash <(curl -s https://codecov.io/bash) && 
-            ./release/deploy.sh && 
+            cd release && ./deploy.sh && cd .. &&
             mvn -P site clean compile site
     deploy:
       provider: pages
