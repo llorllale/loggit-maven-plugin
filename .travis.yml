@@ -9,16 +9,16 @@ jdk:
 jobs:
   include:
   - if: type = pull_request
-    script: mvn -P release-profile -DskipTests=true clean install && \
-            mvn clean cobertura:cobertura && \
-            mvn -DskipTests=true cobertura:check && \
+    script: mvn -P release-profile -DskipTests=true clean install && 
+            mvn clean cobertura:cobertura && 
+            mvn -DskipTests=true cobertura:check && 
             bash <(curl -s https://codecov.io/bash)
   - if: type = push AND branch = master
-    script: mvn -P release-profile -DskipTests=true clean install && \
-            mvn clean cobertura:cobertura && \
-            mvn -DskipTests=true cobertura:check && \
-            bash <(curl -s https://codecov.io/bash) && \
-            ./release/deploy.sh && \
+    script: mvn -P release-profile -DskipTests=true clean install && 
+            mvn clean cobertura:cobertura && 
+            mvn -DskipTests=true cobertura:check && 
+            bash <(curl -s https://codecov.io/bash) && 
+            ./release/deploy.sh && 
             mvn -P site clean compile site
     deploy:
       provider: pages
