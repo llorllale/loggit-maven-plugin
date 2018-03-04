@@ -54,6 +54,9 @@ public final class Changelog extends AbstractMojo {
   @Parameter(name = "customFormatFile")
   private File customFormat;
 
+  @Parameter(name = "ref", defaultValue = Constants.MASTER)
+  private String ref;
+
   /**
    * Ctor.
    * 
@@ -96,10 +99,26 @@ public final class Changelog extends AbstractMojo {
    * @since 0.2.0
    */
   public Changelog(File repo, File output, String format, File customFormat) {
+    this(repo, output, format, customFormat, Constants.MASTER);
+  }
+
+  /**
+   * Ctor.
+   * 
+   * @param repo path to git repo
+   * @param output file to which to save the XML
+   * @param format the format for the output
+   * @param customFormat path to customFormat
+   * @param ref the ref to point to in order to fetch the log
+   * @since 0.3.0
+   */
+  @SuppressWarnings("checkstyle:ParameterNumber")
+  public Changelog(File repo, File output, String format, File customFormat, String ref) {
     this.repo = repo;
     this.xml = output;
     this.format = format;
     this.customFormat = customFormat;
+    this.ref = ref;
   }
 
   @Override
@@ -110,7 +129,9 @@ public final class Changelog extends AbstractMojo {
           new TeeInput(
             new InputOf(
               this.transform(
-                new DefaultGit(this.repo.toPath().resolve(Constants.DOT_GIT)).log().asXml()
+                new DefaultGit(
+                  this.repo.toPath().resolve(Constants.DOT_GIT), this.ref
+                ).log().asXml()
               )
             ),
             new OutputTo(this.xml)
