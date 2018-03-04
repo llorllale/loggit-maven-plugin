@@ -20,8 +20,9 @@ import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.io.IOException;
-import java.util.Objects;
+import org.cactoos.Scalar;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.scalar.IoCheckedScalar;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -36,7 +37,7 @@ import org.xembly.Xembler;
  */
 final class DefaultLog implements Log {
   private final Repository repo;
-  private final Ref ref;
+  private final IoCheckedScalar<Ref> ref;
 
   /**
    * Ctor.
@@ -45,9 +46,9 @@ final class DefaultLog implements Log {
    * @param ref the ref for which to get the commits for
    * @since 0.1.0
    */
-  DefaultLog(Repository repo, Ref ref) {
+  DefaultLog(Repository repo, Scalar<Ref> ref) {
     this.repo = repo;
-    this.ref = ref;
+    this.ref = new IoCheckedScalar<>(ref);
   }
 
   @Override
@@ -56,7 +57,7 @@ final class DefaultLog implements Log {
       final RevWalk walk = new RevWalk(this.repo);
       walk.markStart(
         walk.parseCommit(
-          Objects.requireNonNull(this.ref, "null ref!").getObjectId()
+          this.ref.value().getObjectId()
         )
       );
       return new Mapped<>(
