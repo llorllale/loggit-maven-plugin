@@ -21,6 +21,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import org.eclipse.jgit.lib.Constants;
 import org.junit.Test;
 
 /**
@@ -40,7 +41,7 @@ public final class DefaultGitTest {
   @Test
   public void logIsNotNull() throws IOException {
     assertNotNull(
-      new DefaultGit(Paths.get(".")).log()
+      new DefaultGit(Paths.get("."), Constants.MASTER).log()
     );
   }
 }

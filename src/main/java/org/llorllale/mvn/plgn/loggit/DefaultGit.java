@@ -19,7 +19,6 @@ package org.llorllale.mvn.plgn.loggit;
 import java.io.IOException;
 import java.nio.file.Path;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
-import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -30,15 +29,18 @@ import org.eclipse.jgit.lib.Repository;
  */
 final class DefaultGit implements Git {
   private final Path path;
+  private final String ref;
 
   /**
    * Ctor.
    * 
    * @param path path to the repo's dir
-   * @since 0.1.0
+   * @param ref the ref to point to in order to fetch the log
+   * @since 0.3.0
    */
-  DefaultGit(Path path) {
+  DefaultGit(Path path, String ref) {
     this.path = path;
+    this.ref = ref;
   }
 
   @Override
@@ -46,7 +48,7 @@ final class DefaultGit implements Git {
     final Repository repo = new FileRepository(this.path.toFile());
     return new DefaultLog(
       repo,
-      () -> repo.findRef(Constants.MASTER)
+      () -> repo.findRef(this.ref)
     );
   }
 }

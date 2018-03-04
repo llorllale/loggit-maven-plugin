@@ -28,6 +28,7 @@ import java.nio.file.Files;
 import org.apache.maven.plugin.MojoFailureException;
 import org.cactoos.text.TextOf;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.junit.Test;
 
@@ -137,6 +138,45 @@ public final class ChangelogTest {
     assertThat(
       new TextOf(output).asString(),
       containsString("second,first")
+    );
+  }
+
+  /**
+   * Can output log of a branch other than "master" and include all commits.
+   * 
+   * @throws Exception unexpected
+   */
+  @Test
+  public void logOfCustomBranch() throws Exception {
+    final org.eclipse.jgit.api.Git repo = this.repo();
+    final File output = repo.getRepository().getWorkTree().toPath().resolve("log.xml").toFile();
+    final RevCommit first = this.addCommit(repo, "first", "first@test.com", "First commit");
+    final RevCommit second = this.addCommit(repo, "second", "second@test.com", "Second commit");
+    final String branchName = "logOfCustomBranch";
+    repo.branchCreate().setName(branchName).call();
+    final Ref branch = repo.checkout().setName(branchName).call();
+    final RevCommit third = this.addCommit(repo, "third", "third@test.com", "Third commit");
+    new Changelog(
+      repo.getRepository().getWorkTree(),
+      output, "default", null, branch.getName()
+    ).execute();
+    assertThat(
+      new TextOf(output).asString(),
+      hasXPaths(
+        // @checkstyle LineLength (12 lines)
+        String.format("//commit[id = '%s']/author[name = 'first']", first.getId().getName()),
+        String.format("//commit[id = '%s']/author[email = 'first@test.com']", first.getId().getName()),
+        String.format("//commit[id = '%s']/message[short = 'First commit']", first.getId().getName()),
+        String.format("//commit[id = '%s']/message[full = 'First commit']", first.getId().getName()),
+        String.format("//commit[id = '%s']/author[name = 'second']", second.getId().getName()),
+        String.format("//commit[id = '%s']/author[email = 'second@test.com']", second.getId().getName()),
+        String.format("//commit[id = '%s']/message[short = 'Second commit']", second.getId().getName()),
+        String.format("//commit[id = '%s']/message[full = 'Second commit']", second.getId().getName()),
+        String.format("//commit[id = '%s']/author[name = 'third']", third.getId().getName()),
+        String.format("//commit[id = '%s']/author[email = 'third@test.com']", third.getId().getName()),
+        String.format("//commit[id = '%s']/message[short = 'Third commit']", third.getId().getName()),
+        String.format("//commit[id = '%s']/message[full = 'Third commit']", third.getId().getName())
+      )
     );
   }
 
