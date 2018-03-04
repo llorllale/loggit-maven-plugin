@@ -17,7 +17,6 @@
 package org.llorllale.mvn.plgn.loggit;
 
 // @checkstyle AvoidStaticImport (4 lines)
-import static com.jcabi.matchers.XhtmlMatchers.hasXPath;
 import static com.jcabi.matchers.XhtmlMatchers.hasXPaths;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
@@ -28,10 +27,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -39,9 +38,6 @@ import org.junit.Test;
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.1.0
- * @todo #36:30min Handle NullPointerException thrown when the given ref is null. This will
- *  happen if the git repo has been initialized but no commits have been added. Then, stop
- *  ignoring the 'asXmlNoCommits' and 'asXmlIsValidAgainstSchema' tests and refactor as necessary.
  */
 @SuppressWarnings({"checkstyle:MethodName", "checkstyle:MultipleStringLiterals"})
 public final class DefaultLogTest {
@@ -60,24 +56,8 @@ public final class DefaultLogTest {
     assertNotNull(
       new DefaultLog(
         repo,
-        repo.findRef("master")
+        () -> repo.findRef(Constants.MASTER)
       ).commits()
-    );
-  }
-
-  /**
-   * The XML will have no commit nodes when there are no commits.
-   * 
-   * @throws Exception unexpected
-   * @since 0.1.0
-   */
-  @Ignore
-  @Test
-  public void asXmlNoCommits() throws Exception {
-    final org.eclipse.jgit.api.Git repo = this.repo();
-    assertThat(
-      new DefaultLog(repo.getRepository(), repo.getRepository().findRef("master")).asXml(),
-      hasXPath("/log/commits[count(commit) = 0]")
     );
   }
 
@@ -93,7 +73,9 @@ public final class DefaultLogTest {
     final RevCommit first = this.addCommit(repo, "first", "first@test.com", "First commit");
     final RevCommit second = this.addCommit(repo, "second", "second@test.com", "Second commit");
     assertThat(
-      new DefaultLog(repo.getRepository(), repo.getRepository().findRef("master")).asXml(),
+      new DefaultLog(
+        repo.getRepository(), () -> repo.getRepository().findRef(Constants.MASTER)
+      ).asXml(),
       hasXPaths(
         // @checkstyle LineLength (8 lines)
         String.format("/log/commits/commit[id = '%s']//author[name = 'first']", first.getId().getName()),
@@ -120,7 +102,9 @@ public final class DefaultLogTest {
     this.addCommit(repo, "first", "first@test.com", "First commit");
     this.addCommit(repo, "second", "second@test.com", "Second commit");
     assertThat(
-      new DefaultLog(repo.getRepository(), repo.getRepository().findRef("master")).asXml(),
+      new DefaultLog(
+        repo.getRepository(), () -> repo.getRepository().findRef(Constants.MASTER)
+      ).asXml(),
       hasXPaths(
         "//commit[1]//author[name = 'second']",
         "//commit[2]//author[name = 'first']"
@@ -129,17 +113,20 @@ public final class DefaultLogTest {
   }
 
   /**
-   * The XML complies with the schema.
+   * {@link IOException} if the given branch does not exist. This situation occurs when the
+   * repo is initialized and has not commits yet. This implies that if there IS a branch then
+   * there must be at least one commit.
    * 
-   * @throws Exception unexpected
+   * @throws Exception expected
    * @since 0.1.0
    */
-  @Ignore
-  @Test
-  public void asXmlIsValidAgainstSchema() throws Exception {
+  @Test(expected = IOException.class)
+  public void errorIfNoBranch() throws Exception {
     final org.eclipse.jgit.api.Git repo = this.repo();
     new StrictXML(
-      new DefaultLog(repo.getRepository(), repo.getRepository().findRef("master")).asXml(),
+      new DefaultLog(
+        repo.getRepository(), () -> repo.getRepository().findRef(Constants.MASTER)
+      ).asXml(),
       new Schema()
     ).toString();
   }

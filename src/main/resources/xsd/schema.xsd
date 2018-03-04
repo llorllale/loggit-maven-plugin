@@ -23,7 +23,7 @@
       <xsd:element name="commits">
         <xsd:complexType>
           <xsd:sequence>
-            <xsd:element ref="commit" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="commit" maxOccurs="unbounded"/>
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>

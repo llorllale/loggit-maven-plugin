@@ -46,7 +46,7 @@ final class DefaultGit implements Git {
     final Repository repo = new FileRepository(this.path.toFile());
     return new DefaultLog(
       repo,
-      repo.findRef(Constants.MASTER)
+      () -> repo.findRef(Constants.MASTER)
     );
   }
 }
