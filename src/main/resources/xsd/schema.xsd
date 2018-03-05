@@ -42,6 +42,13 @@
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
+        <xsd:element name="taggedAs">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="tag" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>

@@ -19,6 +19,7 @@ package org.llorllale.mvn.plgn.loggit;
 import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.xembly.Directives;
 import org.xembly.Xembler;
@@ -32,15 +33,18 @@ import org.xembly.Xembler;
  *  As it is, this class, and especially its mock counterpart, handle too many details.
  */
 final class DefaultCommit implements Commit {
+  private final Repository repo;
   private final RevCommit rev;
 
   /**
    * Ctor.
    * 
+   * @param repo the git repository
    * @param rev the git rev
-   * @since 0.1.0
+   * @since 0.5.0
    */
-  DefaultCommit(RevCommit rev) {
+  DefaultCommit(Repository repo, RevCommit rev) {
+    this.repo = repo;
     this.rev = rev;
   }
 
@@ -61,6 +65,8 @@ final class DefaultCommit implements Commit {
                 .add("short").set(this.rev.getShortMessage()).up()
                 .add("full").set(this.rev.getFullMessage()).up()
                 .up()
+              .add("taggedAs")
+              .append(new TagsOf(this.repo, this.rev))
         ).xmlQuietly()
       ),
       new Schema()
