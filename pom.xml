@@ -24,7 +24,7 @@
   <artifactId>loggit-maven-plugin</artifactId>
   <version>0.4.0-SNAPSHOT</version>
 
-  <packaging>jar</packaging>
+  <packaging>maven-plugin</packaging>
 
   <name>loggit-maven-plugin</name>
   <description>Generates changelog and release notes for projects using git.</description>
@@ -457,6 +457,11 @@ limitations under the License.</inlineHeader>
             </licenseMapping>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-plugin-plugin</artifactId>
+          <version>3.5</version>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -504,6 +509,10 @@ limitations under the License.</inlineHeader>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-plugin-plugin</artifactId>
       </plugin>
     </plugins>
   </build>
