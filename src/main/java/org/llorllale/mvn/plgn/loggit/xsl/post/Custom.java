@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package org.llorllale.mvn.plgn.loggit.xsl;
+package org.llorllale.mvn.plgn.loggit.xsl.post;
 
 import org.cactoos.Input;
+import org.llorllale.mvn.plgn.loggit.xsl.StylesheetEnvelope;
 
 /**
  * Custom XSLT provided by the user.

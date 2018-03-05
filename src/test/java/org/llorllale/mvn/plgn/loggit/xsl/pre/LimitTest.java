@@ -14,23 +14,25 @@
  * limitations under the License.
  */
 
-package org.llorllale.mvn.plgn.loggit.xsl;
+package org.llorllale.mvn.plgn.loggit.xsl.pre;
 
-// @checkstyle AvoidStaticImport (2 lines)
-import static org.hamcrest.CoreMatchers.is;
+// @checkstyle AvoidStaticImport (4 lines)
+import static com.jcabi.matchers.XhtmlMatchers.hasXPath;
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 
 import com.jcabi.xml.XMLDocument;
 import org.junit.Test;
 
 /**
- * Tests for {@link Markdown}.
+ * Tests for {@link Limit}.
  *
  * @author George Aristy (george.aristy@gmail.com)
- * @since 0.2.0
+ * @since 0.4.0
  */
 @SuppressWarnings("checkstyle:MultipleStringLiterals")
-public final class MarkdownTest {
+public final class LimitTest {
   private static final String LOG =
     "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
     + "<log>"
@@ -63,21 +65,18 @@ public final class MarkdownTest {
     + "</log>";
 
   /**
-   * Default markdown format.
+   * Must allow only one commit if such is specified.
    * 
-   * @since 0.2.0
+   * @since 0.4.0
    */
   @Test
-  public void defaultMarkdown() {
+  @SuppressWarnings("checkstyle:MethodName")
+  public void limitOfOneCommit() {
     assertThat(
-      new Markdown().applyTo(new XMLDocument(MarkdownTest.LOG)).replaceAll("\\r\\n", "\n"),
-      // @checkstyle LineLength (1 line)
-      is(
-        "# CHANGELOG\n"
-        + "* id: fcc814a (by second)\n"
-        + "      Second commit\n"
-        + "* id: b8ed3b6 (by first)\n"
-        + "      First commit\n"
+      new Limit(1).transform(new XMLDocument(LimitTest.LOG)),
+      allOf(
+        hasXPath("//commit[id = 'fcc814a658aea3537ad5182ff211ed8c58479fb9']"),
+        not(hasXPath("//commit[id = 'b8ed3b64435525f8f5c9196489dce85613cefe96']"))
       )
     );
   }

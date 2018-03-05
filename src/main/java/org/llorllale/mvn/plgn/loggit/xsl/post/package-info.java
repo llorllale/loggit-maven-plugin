@@ -14,23 +14,9 @@
  * limitations under the License.
  */
 
-package org.llorllale.mvn.plgn.loggit.xsl;
-
-import org.cactoos.io.ResourceOf;
-
 /**
- * Default markdown transformation.
+ * XSLs for post-processing the XML.
  *
- * @author George Aristy (george.aristy@gmail.com)
- * @since 0.2.0
+ * @since 0.4.0
  */
-public final class Markdown extends StylesheetEnvelope {
-  /**
-   * Ctor.
-   * 
-   * @since 0.2.0
-   */
-  public Markdown() {
-    super(new ResourceOf("xsl/markdown.xsl"));
-  }
-}
+package org.llorllale.mvn.plgn.loggit.xsl.post;

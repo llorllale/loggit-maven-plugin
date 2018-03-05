@@ -30,9 +30,10 @@ import org.cactoos.io.OutputTo;
 import org.cactoos.io.TeeInput;
 import org.cactoos.scalar.IoCheckedScalar;
 import org.eclipse.jgit.lib.Constants;
-import org.llorllale.mvn.plgn.loggit.xsl.Custom;
-import org.llorllale.mvn.plgn.loggit.xsl.Identity;
-import org.llorllale.mvn.plgn.loggit.xsl.Markdown;
+import org.llorllale.mvn.plgn.loggit.xsl.post.Custom;
+import org.llorllale.mvn.plgn.loggit.xsl.post.Identity;
+import org.llorllale.mvn.plgn.loggit.xsl.post.Markdown;
+import org.llorllale.mvn.plgn.loggit.xsl.pre.Limit;
 
 /**
  * Changelog.
@@ -56,6 +57,9 @@ public final class Changelog extends AbstractMojo {
 
   @Parameter(name = "ref", defaultValue = Constants.MASTER)
   private String ref;
+
+  @Parameter(name = "maxEntries", defaultValue = "2147483647")
+  private int maxEntries;
 
   /**
    * Ctor.
@@ -114,11 +118,31 @@ public final class Changelog extends AbstractMojo {
    */
   @SuppressWarnings("checkstyle:ParameterNumber")
   public Changelog(File repo, File output, String format, File customFormat, String ref) {
+    this(repo, output, format, customFormat, ref, Integer.MAX_VALUE);
+  }
+
+  /**
+   * Ctor.
+   * 
+   * @param repo path to git repo
+   * @param output file to which to save the XML
+   * @param format the format for the output
+   * @param customFormat path to customFormat
+   * @param ref the ref to point to in order to fetch the log
+   * @param maxEntries max number of entries to include in the log
+   * @since 0.4.0
+   */
+  @SuppressWarnings("checkstyle:ParameterNumber")
+  public Changelog(
+    File repo, File output, String format,
+    File customFormat, String ref, int maxEntries
+  ) {
     this.repo = repo;
     this.outputFile = output;
     this.format = format;
     this.customFormatFile = customFormat;
     this.ref = ref;
+    this.maxEntries = maxEntries;
   }
 
   @Override
@@ -128,10 +152,12 @@ public final class Changelog extends AbstractMojo {
         new LengthOf(
           new TeeInput(
             new InputOf(
-              this.transform(
-                new DefaultGit(
-                  this.repo.toPath().resolve(Constants.DOT_GIT), this.ref
-                ).log().asXml()
+              this.postprocess(
+                this.preprocess(
+                  new DefaultGit(
+                    this.repo.toPath().resolve(Constants.DOT_GIT), this.ref
+                  ).log().asXml()
+                )
               )
             ),
             new OutputTo(this.outputFile)
@@ -153,7 +179,7 @@ public final class Changelog extends AbstractMojo {
    * @return the transformed XML
    * @throws IOException if there's an issue reading the stylesheet
    */
-  private String transform(XML original) throws IOException {
+  private String postprocess(XML original) throws IOException {
     final String output;
     if ("markdown".equals(this.format)) {
       output = new Markdown().applyTo(original);
@@ -163,5 +189,16 @@ public final class Changelog extends AbstractMojo {
       output = new Identity().applyTo(original);
     }
     return output;
+  }
+
+  /**
+   * Pre-processes the XML log.
+   * 
+   * @param xml original xml
+   * @return the preprocessed XML
+   * @throws IOException if there's an error during the transformation
+   */
+  private XML preprocess(XML xml) throws IOException {
+    return new Limit(this.maxEntries).transform(xml);
   }
 }

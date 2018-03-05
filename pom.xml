@@ -296,7 +296,7 @@
         <filtering>false</filtering>
         <targetPath>xsl</targetPath>
         <includes>
-          <include>*.xsl</include>
+          <include>**/*.xsl</include>
         </includes>
       </resource>
     </resources>

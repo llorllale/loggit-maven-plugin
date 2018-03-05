@@ -20,9 +20,12 @@ import com.jcabi.xml.Sources;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XSL;
 import com.jcabi.xml.XSLDocument;
+import java.util.Collections;
+import java.util.Map;
 import org.cactoos.Input;
 import org.cactoos.scalar.StickyScalar;
 import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.text.TextOf;
 
 /**
  * Implements XSL functions.
@@ -30,7 +33,7 @@ import org.cactoos.scalar.UncheckedScalar;
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.2.0
  */
-abstract class StylesheetEnvelope implements XSL {
+public abstract class StylesheetEnvelope implements XSL {
   private final UncheckedScalar<XSL> stylesheet;
 
   /**
@@ -39,12 +42,35 @@ abstract class StylesheetEnvelope implements XSL {
    * @param input the XSL file
    * @since 0.2.0
    */
-  StylesheetEnvelope(Input input) {
-    this.stylesheet = new UncheckedScalar<>(
-      new StickyScalar<>(
-        () -> new XSLDocument(input.stream())
-      )
+  public StylesheetEnvelope(Input input) {
+    this(input, Collections.emptyMap());
+  }
+
+  /**
+   * Ctor.
+   * 
+   * @param xsl the XSL
+   * @param params XSL params
+   * @since 0.4.0
+   */
+  public StylesheetEnvelope(Input xsl, Map<String, Object> params) {
+    this(
+      new UncheckedScalar<>(
+        new StickyScalar<>(
+          () -> new XSLDocument(new TextOf(xsl).asString(), Sources.DUMMY, params)
+        )
+       )
     );
+  }
+
+  /**
+   * Ctor.
+   * 
+   * @param xsl the XSL
+   * @since 0.4.0
+   */
+  public StylesheetEnvelope(UncheckedScalar<XSL> xsl) {
+    this.stylesheet = xsl;
   }
 
   @Override
