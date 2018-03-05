@@ -45,14 +45,14 @@ public final class Changelog extends AbstractMojo {
   @Parameter(name = "repo", defaultValue = "${basedir}")
   private File repo;
 
-  @Parameter(name = "outputFile", defaultValue = "gitlog.xml")
-  private File xml;
+  @Parameter(name = "outputFile", defaultValue = "${project.build.directory}/gitlog.xml")
+  private File outputFile;
 
   @Parameter(name = "format", defaultValue = "default")
   private String format;
 
   @Parameter(name = "customFormatFile")
-  private File customFormat;
+  private File customFormatFile;
 
   @Parameter(name = "ref", defaultValue = Constants.MASTER)
   private String ref;
@@ -115,9 +115,9 @@ public final class Changelog extends AbstractMojo {
   @SuppressWarnings("checkstyle:ParameterNumber")
   public Changelog(File repo, File output, String format, File customFormat, String ref) {
     this.repo = repo;
-    this.xml = output;
+    this.outputFile = output;
     this.format = format;
-    this.customFormat = customFormat;
+    this.customFormatFile = customFormat;
     this.ref = ref;
   }
 
@@ -134,13 +134,13 @@ public final class Changelog extends AbstractMojo {
                 ).log().asXml()
               )
             ),
-            new OutputTo(this.xml)
+            new OutputTo(this.outputFile)
           )
         )
       ).value();
     } catch (IOException e) {
       throw new MojoFailureException(
-        String.format("Cannot save XML from repo %s to file %s", this.repo, this.xml),
+        String.format("Cannot save XML from repo %s to file %s", this.repo, this.outputFile),
         e
       );
     }
@@ -158,7 +158,7 @@ public final class Changelog extends AbstractMojo {
     if ("markdown".equals(this.format)) {
       output = new Markdown().applyTo(original);
     } else if ("custom".equals(this.format)) {
-      output = new Custom(new InputOf(this.customFormat)).applyTo(original);
+      output = new Custom(new InputOf(this.customFormatFile)).applyTo(original);
     } else {
       output = new Identity().applyTo(original);
     }
