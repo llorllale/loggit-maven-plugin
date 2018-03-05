@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package org.llorllale.mvn.plgn.loggit.xsl;
+package org.llorllale.mvn.plgn.loggit.xsl.post;
 
 import org.cactoos.io.ResourceOf;
+import org.llorllale.mvn.plgn.loggit.xsl.StylesheetEnvelope;
 
 /**
  * Creates an identical copy of the XML.
@@ -31,6 +32,6 @@ public final class Identity extends StylesheetEnvelope {
    * @since 0.2.0
    */
   public Identity() {
-    super(new ResourceOf("xsl/identity.xsl"));
+    super(new ResourceOf("xsl/post/identity.xsl"));
   }
 }
