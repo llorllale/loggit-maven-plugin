@@ -61,7 +61,7 @@ final class DefaultLog implements Log {
         )
       );
       return new Mapped<>(
-        DefaultCommit::new,
+        commit -> new DefaultCommit(this.repo, commit),
         walk
       );
     } catch (NullPointerException e) {

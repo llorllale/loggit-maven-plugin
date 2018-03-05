@@ -51,7 +51,7 @@ public final class DefaultCommitTest {
       .setMessage("This is a test.\n\nTest of DefaultCommit.asXml")
       .call();
     assertThat(
-      new DefaultCommit(commit).asXml(),
+      new DefaultCommit(repo.getRepository(), commit).asXml(),
       allOf(
         hasXPath(String.format("/commit[id = '%s']", commit.getId().getName())),
         hasXPath(String.format("/commit/author[name = '%s']", commit.getAuthorIdent().getName())),

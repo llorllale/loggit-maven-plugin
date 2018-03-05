@@ -183,6 +183,13 @@
                 <goals>
                   <goal>jar</goal>
                 </goals>
+                <configuration>
+                  <tags>
+                    <tag>
+                      <name>todo</name>
+                    </tag>
+                  </tags>
+                </configuration>
               </execution>
             </executions>
           </plugin>
@@ -408,6 +415,11 @@
           <version>2.10.4</version>
           <configuration>
             <level>protected</level>
+            <tags>
+              <tag>
+                <name>todo</name>
+              </tag>
+            </tags>
           </configuration>
         </plugin>
         <plugin>
