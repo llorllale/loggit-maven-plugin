@@ -41,8 +41,6 @@ import org.llorllale.mvn.plgn.loggit.xsl.pre.UntilTag;
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.2.0
- * @todo #60:30min Add new option to truncate the commits up to and including the tag provided by
- *  the user. Use the new "commit/taggedAs/tag" structure for this.
  */
 @Mojo(name = "changelog")
 public final class Changelog extends AbstractMojo {
