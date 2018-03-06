@@ -22,8 +22,10 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 
+import com.jcabi.xml.StrictXML;
 import com.jcabi.xml.XMLDocument;
 import org.junit.Test;
+import org.llorllale.mvn.plgn.loggit.Schema;
 
 /**
  * Tests for {@link Limit}.
@@ -48,6 +50,7 @@ public final class LimitTest {
     + "        <short>Second commit</short>"
     + "        <full>Second commit</full>"
     + "      </message>"
+    + "      <taggedAs/>"
     + "    </commit>"
     + "    <commit>"
     + "      <id>b8ed3b64435525f8f5c9196489dce85613cefe96</id>"
@@ -60,6 +63,7 @@ public final class LimitTest {
     + "        <short>First commit</short>"
     + "        <full>First commit</full>"
     + "      </message>"
+    + "      <taggedAs/>"
     + "    </commit>"
     + "  </commits>"
     + "</log>";
@@ -79,5 +83,20 @@ public final class LimitTest {
         not(hasXPath("//commit[id = 'b8ed3b64435525f8f5c9196489dce85613cefe96']"))
       )
     );
+  }
+
+  /**
+   * Validate output XML against the schema.
+   * 
+   * @since 0.6.0
+   */
+  @Test
+  public void xmlIsValid() {
+    new StrictXML(
+      new Limit(Integer.MAX_VALUE).transform(
+        new XMLDocument(LimitTest.LOG)
+      ),
+      new Schema()
+    ).toString();
   }
 }

@@ -36,7 +36,7 @@ public final class Schema implements XSD {
    * 
    * @since 0.1.0
    */
-  Schema() {
+  public Schema() {
     this.schemaFile = "/xsd/schema.xsd";
   }
 

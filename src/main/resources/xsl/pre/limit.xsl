@@ -20,10 +20,9 @@
   <xsl:param name="max"/>
   <xsl:template match="commits">
     <commits>
-      <xsl:copy select="@*"/>
       <xsl:for-each select="commit">
         <xsl:if test="position() &lt;= $max">
-          <xsl:apply-templates select="."/>
+          <xsl:copy-of select="."/>
         </xsl:if>
       </xsl:for-each>
     </commits>
