@@ -34,6 +34,7 @@ import org.llorllale.mvn.plgn.loggit.xsl.post.Custom;
 import org.llorllale.mvn.plgn.loggit.xsl.post.Identity;
 import org.llorllale.mvn.plgn.loggit.xsl.post.Markdown;
 import org.llorllale.mvn.plgn.loggit.xsl.pre.Limit;
+import org.llorllale.mvn.plgn.loggit.xsl.pre.UntilTag;
 
 /**
  * Changelog.
@@ -62,6 +63,9 @@ public final class Changelog extends AbstractMojo {
 
   @Parameter(name = "maxEntries", defaultValue = "2147483647")
   private int maxEntries;
+
+  @Parameter(name = "endTag", defaultValue = "")
+  private String endTag;
 
   /**
    * Ctor.
@@ -139,12 +143,34 @@ public final class Changelog extends AbstractMojo {
     File repo, File output, String format,
     File customFormat, String ref, int maxEntries
   ) {
+    this(repo, output, format, customFormat, ref, maxEntries, "");
+  }
+
+  /**
+   * Ctor.
+   * 
+   * @param repo path to git repo
+   * @param output file to which to save the XML
+   * @param format the format for the output
+   * @param customFormat path to customFormat
+   * @param ref the ref to point to in order to fetch the log
+   * @param maxEntries max number of entries to include in the log
+   * @param endTag tag until which to include commits
+   * @since 0.4.0
+   */
+  @SuppressWarnings("checkstyle:ParameterNumber")
+  public Changelog(
+    File repo, File output, String format,
+    File customFormat, String ref, int maxEntries,
+    String endTag
+  ) {
     this.repo = repo;
     this.outputFile = output;
     this.format = format;
     this.customFormatFile = customFormat;
     this.ref = ref;
     this.maxEntries = maxEntries;
+    this.endTag = endTag;
   }
 
   @Override
@@ -201,6 +227,8 @@ public final class Changelog extends AbstractMojo {
    * @throws IOException if there's an error during the transformation
    */
   private XML preprocess(XML xml) throws IOException {
-    return new Limit(this.maxEntries).transform(xml);
+    return new UntilTag(this.endTag).transform(
+      new Limit(this.maxEntries).transform(xml)
+    );
   }
 }
