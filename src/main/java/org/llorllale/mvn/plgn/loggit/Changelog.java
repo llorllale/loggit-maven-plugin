@@ -51,28 +51,32 @@ public final class Changelog extends AbstractMojo {
   @Parameter(name = "repo", defaultValue = "${basedir}")
   private File repo;
 
-  @Parameter(name = "outputFile", defaultValue = "${project.build.directory}/gitlog.xml")
+  @Parameter(
+    name = "outputFile",
+    defaultValue = "${project.build.directory}/gitlog.xml",
+    property = "loggit.outputFile"
+  )
   private File outputFile;
 
-  @Parameter(name = "format", defaultValue = "default")
+  @Parameter(name = "format", defaultValue = "default", property = "loggit.format")
   private String format;
 
-  @Parameter(name = "customFormatFile")
+  @Parameter(name = "customFormatFile", property = "loggit.customFormatFile")
   private File customFormatFile;
 
-  @Parameter(name = "branch", defaultValue = Constants.MASTER)
+  @Parameter(name = "branch", defaultValue = Constants.MASTER, property = "loggit.branch")
   private String branch;
 
-  @Parameter(name = "maxEntries", defaultValue = "2147483647")
+  @Parameter(name = "maxEntries", defaultValue = "2147483647", property = "loggit.maxEntries")
   private int maxEntries;
 
-  @Parameter(name = "startTag", defaultValue = "")
+  @Parameter(name = "startTag", defaultValue = "", property = "loggit.startTag")
   private String startTag;
 
-  @Parameter(name = "endTag", defaultValue = "")
+  @Parameter(name = "endTag", defaultValue = "", property = "loggit.endTag")
   private String endTag;
 
-  @Parameter(name = "includeRegex", defaultValue = ".*")
+  @Parameter(name = "includeRegex", defaultValue = ".*", property = "loggit.includeRegex")
   private String includeRegex;
 
   /**
