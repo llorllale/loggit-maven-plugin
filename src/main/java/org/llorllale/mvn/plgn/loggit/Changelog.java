@@ -22,6 +22,7 @@ import java.io.IOException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.cactoos.io.InputOf;
@@ -44,7 +45,7 @@ import org.llorllale.mvn.plgn.loggit.xsl.pre.StartTag;
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.2.0
  */
-@Mojo(name = "changelog")
+@Mojo(name = "changelog", defaultPhase = LifecyclePhase.PREPARE_PACKAGE)
 @SuppressWarnings("checkstyle:MultipleStringLiterals")
 public final class Changelog extends AbstractMojo {
   @Parameter(name = "repo", defaultValue = "${basedir}")
