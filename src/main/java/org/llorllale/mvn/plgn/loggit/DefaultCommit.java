@@ -29,8 +29,6 @@ import org.xembly.Xembler;
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.1.0
- * @todo #20:30min We need to split the author parts into its own separate interface.
- *  As it is, this class, and especially its mock counterpart, handle too many details.
  */
 final class DefaultCommit implements Commit {
   private final Repository repo;
