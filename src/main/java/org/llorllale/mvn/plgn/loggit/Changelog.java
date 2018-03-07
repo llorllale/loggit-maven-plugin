@@ -33,9 +33,10 @@ import org.eclipse.jgit.lib.Constants;
 import org.llorllale.mvn.plgn.loggit.xsl.post.Custom;
 import org.llorllale.mvn.plgn.loggit.xsl.post.Identity;
 import org.llorllale.mvn.plgn.loggit.xsl.post.Markdown;
+import org.llorllale.mvn.plgn.loggit.xsl.pre.EndTag;
 import org.llorllale.mvn.plgn.loggit.xsl.pre.Limit;
 import org.llorllale.mvn.plgn.loggit.xsl.pre.Pattern;
-import org.llorllale.mvn.plgn.loggit.xsl.pre.UntilTag;
+import org.llorllale.mvn.plgn.loggit.xsl.pre.StartTag;
 
 /**
  * Changelog.
@@ -44,6 +45,7 @@ import org.llorllale.mvn.plgn.loggit.xsl.pre.UntilTag;
  * @since 0.2.0
  */
 @Mojo(name = "changelog")
+@SuppressWarnings("checkstyle:MultipleStringLiterals")
 public final class Changelog extends AbstractMojo {
   @Parameter(name = "repo", defaultValue = "${basedir}")
   private File repo;
@@ -62,6 +64,9 @@ public final class Changelog extends AbstractMojo {
 
   @Parameter(name = "maxEntries", defaultValue = "2147483647")
   private int maxEntries;
+
+  @Parameter(name = "startTag", defaultValue = "")
+  private String startTag;
 
   @Parameter(name = "endTag", defaultValue = "")
   private String endTag;
@@ -157,16 +162,16 @@ public final class Changelog extends AbstractMojo {
    * @param customFormat path to customFormat
    * @param ref the ref to point to in order to fetch the log
    * @param maxEntries max number of entries to include in the log
-   * @param endTag tag until which to include commits
+   * @param startTag starting tag
    * @since 0.5.0
    */
   @SuppressWarnings("checkstyle:ParameterNumber")
   public Changelog(
     File repo, File output, String format,
     File customFormat, String ref, int maxEntries,
-    String endTag
+    String startTag
   ) {
-    this(repo, output, format, customFormat, ref, maxEntries, endTag, ".*");
+    this(repo, output, format, customFormat, ref, maxEntries, startTag, ".*");
   }
 
   /**
@@ -178,7 +183,7 @@ public final class Changelog extends AbstractMojo {
    * @param customFormat path to customFormat
    * @param ref the ref to point to in order to fetch the log
    * @param maxEntries max number of entries to include in the log
-   * @param endTag tag until which to include commits
+   * @param startTag starting tag
    * @param includeRegex the regular expression that commit messages must match
    * @since 0.6.0
    */
@@ -186,7 +191,34 @@ public final class Changelog extends AbstractMojo {
   public Changelog(
     File repo, File output, String format,
     File customFormat, String ref, int maxEntries,
-    String endTag, String includeRegex
+    String startTag, String includeRegex
+  ) {
+    this(
+      repo, output, format,
+      customFormat, ref, maxEntries,
+      startTag, includeRegex, ""
+    );
+  }
+
+  /**
+   * Ctor.
+   * 
+   * @param repo path to git repo
+   * @param output file to which to save the XML
+   * @param format the format for the output
+   * @param customFormat path to customFormat
+   * @param ref the ref to point to in order to fetch the log
+   * @param maxEntries max number of entries to include in the log
+   * @param startTag starting tag
+   * @param includeRegex the regular expression that commit messages must match
+   * @param endTag the ending tag
+   * @since 0.7.0
+   */
+  @SuppressWarnings("checkstyle:ParameterNumber")
+  public Changelog(
+    File repo, File output, String format,
+    File customFormat, String ref, int maxEntries,
+    String startTag, String includeRegex, String endTag
   ) {
     this.repo = repo;
     this.outputFile = output;
@@ -194,8 +226,9 @@ public final class Changelog extends AbstractMojo {
     this.customFormatFile = customFormat;
     this.ref = ref;
     this.maxEntries = maxEntries;
-    this.endTag = endTag;
+    this.startTag = startTag;
     this.includeRegex = includeRegex;
+    this.endTag = endTag;
   }
 
   @Override
@@ -253,8 +286,10 @@ public final class Changelog extends AbstractMojo {
    */
   private XML preprocess(XML xml) throws IOException {
     return new Pattern(this.includeRegex).transform(
-      new UntilTag(this.endTag).transform(
-        new Limit(this.maxEntries).transform(xml)
+      new EndTag(this.endTag).transform(
+        new StartTag(this.startTag).transform(
+          new Limit(this.maxEntries).transform(xml)
+        )
       )
     );
   }

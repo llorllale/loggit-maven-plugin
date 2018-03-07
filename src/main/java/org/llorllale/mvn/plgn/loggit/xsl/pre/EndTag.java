@@ -22,21 +22,21 @@ import org.cactoos.map.MapOf;
 import org.llorllale.mvn.plgn.loggit.xsl.StylesheetEnvelope;
 
 /**
- * Copies commits until one with a given tag is found.
+ * Excludes commits until a given tag is found.
  *
  * @author George Aristy (george.aristy@gmail.com)
- * @since 0.5.0
+ * @since 0.7.0
  */
-public final class UntilTag extends StylesheetEnvelope {
+public final class EndTag extends StylesheetEnvelope {
   /**
    * Ctor.
    * 
-   * @param tag the tag upon which to stop copying the commits
-   * @since 0.5.0
+   * @param tag the ending tag
+   * @since 0.7.0
    */
-  public UntilTag(String tag) {
+  public EndTag(String tag) {
     super(
-      new ResourceOf("xsl/pre/until-tag.xsl"),
+      new ResourceOf("xsl/pre/end-tag.xsl"),
       new MapOf<>(new MapEntry<>("tag", tag))
     );
   }

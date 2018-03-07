@@ -27,14 +27,14 @@ import com.jcabi.xml.XMLDocument;
 import org.junit.Test;
 
 /**
- * Tests for {@link UntilTag}.
+ * Tests for {@link StartTag}.
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.5.0
  * @checkstyle MethodName (500 lines)
  */
 @SuppressWarnings("checkstyle:MultipleStringLiterals")
-public final class UntilTagTest {
+public final class StartTagTest {
   private static final String LOG =
     "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
     + "<log>"
@@ -103,8 +103,7 @@ public final class UntilTagTest {
    */
   @Test
   public void allCommitsIncludedIfNoTagIsGiven() {
-    assertThat(
-      new UntilTag("").applyTo(new XMLDocument(UntilTagTest.LOG)),
+    assertThat(new StartTag("").applyTo(new XMLDocument(StartTagTest.LOG)),
       hasXPaths(
         "/log/commits/commit[id = 'b8ed3b6449289df8f5c9196492idj85613cefe96']",
         "/log/commits/commit[id = 'b8ed3b6449289df8f5c9196489dce85613cefe96']",
@@ -121,8 +120,7 @@ public final class UntilTagTest {
    */
   @Test
   public void truncateCommitsStartingFromTag() {
-    assertThat(
-      new UntilTag("1.0.0").applyTo(new XMLDocument(UntilTagTest.LOG)),
+    assertThat(new StartTag("1.0.0").applyTo(new XMLDocument(StartTagTest.LOG)),
       allOf(
         hasXPath("/log/commits/commit[id = 'b8ed3b6449289df8f5c9196492idj85613cefe96']"),
         hasXPath("/log/commits/commit[id = 'b8ed3b6449289df8f5c9196489dce85613cefe96']"),
