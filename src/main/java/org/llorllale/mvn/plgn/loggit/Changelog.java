@@ -59,8 +59,8 @@ public final class Changelog extends AbstractMojo {
   @Parameter(name = "customFormatFile")
   private File customFormatFile;
 
-  @Parameter(name = "ref", defaultValue = Constants.MASTER)
-  private String ref;
+  @Parameter(name = "branch", defaultValue = Constants.MASTER)
+  private String branch;
 
   @Parameter(name = "maxEntries", defaultValue = "2147483647")
   private int maxEntries;
@@ -126,12 +126,12 @@ public final class Changelog extends AbstractMojo {
    * @param output file to which to save the XML
    * @param format the format for the output
    * @param customFormat path to customFormat
-   * @param ref the ref to point to in order to fetch the log
+   * @param branch the branch to point to in order to fetch the log
    * @since 0.3.0
    */
   @SuppressWarnings("checkstyle:ParameterNumber")
-  public Changelog(File repo, File output, String format, File customFormat, String ref) {
-    this(repo, output, format, customFormat, ref, Integer.MAX_VALUE);
+  public Changelog(File repo, File output, String format, File customFormat, String branch) {
+    this(repo, output, format, customFormat, branch, Integer.MAX_VALUE);
   }
 
   /**
@@ -141,16 +141,16 @@ public final class Changelog extends AbstractMojo {
    * @param output file to which to save the XML
    * @param format the format for the output
    * @param customFormat path to customFormat
-   * @param ref the ref to point to in order to fetch the log
+   * @param branch the branch to point to in order to fetch the log
    * @param maxEntries max number of entries to include in the log
    * @since 0.4.0
    */
   @SuppressWarnings("checkstyle:ParameterNumber")
   public Changelog(
     File repo, File output, String format,
-    File customFormat, String ref, int maxEntries
+    File customFormat, String branch, int maxEntries
   ) {
-    this(repo, output, format, customFormat, ref, maxEntries, "");
+    this(repo, output, format, customFormat, branch, maxEntries, "");
   }
 
   /**
@@ -160,7 +160,7 @@ public final class Changelog extends AbstractMojo {
    * @param output file to which to save the XML
    * @param format the format for the output
    * @param customFormat path to customFormat
-   * @param ref the ref to point to in order to fetch the log
+   * @param branch the branch to point to in order to fetch the log
    * @param maxEntries max number of entries to include in the log
    * @param startTag starting tag
    * @since 0.5.0
@@ -168,10 +168,10 @@ public final class Changelog extends AbstractMojo {
   @SuppressWarnings("checkstyle:ParameterNumber")
   public Changelog(
     File repo, File output, String format,
-    File customFormat, String ref, int maxEntries,
+    File customFormat, String branch, int maxEntries,
     String startTag
   ) {
-    this(repo, output, format, customFormat, ref, maxEntries, startTag, ".*");
+    this(repo, output, format, customFormat, branch, maxEntries, startTag, ".*");
   }
 
   /**
@@ -181,7 +181,7 @@ public final class Changelog extends AbstractMojo {
    * @param output file to which to save the XML
    * @param format the format for the output
    * @param customFormat path to customFormat
-   * @param ref the ref to point to in order to fetch the log
+   * @param branch the branch to point to in order to fetch the log
    * @param maxEntries max number of entries to include in the log
    * @param startTag starting tag
    * @param includeRegex the regular expression that commit messages must match
@@ -190,12 +190,12 @@ public final class Changelog extends AbstractMojo {
   @SuppressWarnings("checkstyle:ParameterNumber")
   public Changelog(
     File repo, File output, String format,
-    File customFormat, String ref, int maxEntries,
+    File customFormat, String branch, int maxEntries,
     String startTag, String includeRegex
   ) {
     this(
       repo, output, format,
-      customFormat, ref, maxEntries,
+      customFormat, branch, maxEntries,
       startTag, includeRegex, ""
     );
   }
@@ -207,7 +207,7 @@ public final class Changelog extends AbstractMojo {
    * @param output file to which to save the XML
    * @param format the format for the output
    * @param customFormat path to customFormat
-   * @param ref the ref to point to in order to fetch the log
+   * @param branch the branch to point to in order to fetch the log
    * @param maxEntries max number of entries to include in the log
    * @param startTag starting tag
    * @param includeRegex the regular expression that commit messages must match
@@ -217,14 +217,14 @@ public final class Changelog extends AbstractMojo {
   @SuppressWarnings("checkstyle:ParameterNumber")
   public Changelog(
     File repo, File output, String format,
-    File customFormat, String ref, int maxEntries,
+    File customFormat, String branch, int maxEntries,
     String startTag, String includeRegex, String endTag
   ) {
     this.repo = repo;
     this.outputFile = output;
     this.format = format;
     this.customFormatFile = customFormat;
-    this.ref = ref;
+    this.branch = branch;
     this.maxEntries = maxEntries;
     this.startTag = startTag;
     this.includeRegex = includeRegex;
@@ -241,7 +241,7 @@ public final class Changelog extends AbstractMojo {
               this.postprocess(
                 this.preprocess(
                   new DefaultGit(
-                    this.repo.toPath().resolve(Constants.DOT_GIT), this.ref
+                    this.repo.toPath().resolve(Constants.DOT_GIT), this.branch
                   ).log().asXml()
                 )
               )
