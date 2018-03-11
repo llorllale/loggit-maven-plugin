@@ -21,6 +21,10 @@ jobs:
             cd release && ./deploy.sh && cd .. &&
             mvn -P site clean compile site
     deploy:
+      # workaround #87 as per https://github.com/travis-ci/travis-ci/issues/9312#issuecomment-371590249
+      edge:
+        branch: v1.8.47
+      # end workaround
       provider: pages
       skip_cleanup: true
       local_dir: target/site/
