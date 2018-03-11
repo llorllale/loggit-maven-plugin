@@ -17,11 +17,8 @@
 package org.llorllale.mvn.plgn.loggit;
 
 import java.util.Iterator;
-import org.cactoos.iterable.Mapped;
-import org.cactoos.iterator.Filtered;
-import org.cactoos.scalar.And;
 import org.cactoos.scalar.UncheckedScalar;
-import org.eclipse.jgit.api.LogCommand;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.xembly.Directive;
@@ -54,25 +51,12 @@ final class TagsOf implements Iterable<Directive> {
     return new UncheckedScalar<>(
       () -> {
         final Directives dirs = new Directives();
-        final LogCommand log = new org.eclipse.jgit.api.Git(this.repo).log();
-        new And(
-          tag -> {
-            if (new Filtered<>(rev -> rev.equals(this.commit), log.call().iterator()).hasNext()) {
-              dirs.add("tag").set(tag.getName().split("/")[2]).up();
-            }
-            return true;
-          },
-          new Mapped<>(
-            peeled -> {
-              log.add(peeled.getPeeledObjectId());
-              return peeled;
-            },
-            new Mapped<>(
-              ref -> this.repo.peel(ref),
-              new org.eclipse.jgit.api.Git(this.repo).tagList().call()
-            )
-          )
-        ).value();
+        for (Ref tag : new org.eclipse.jgit.api.Git(this.repo).tagList().call()) {
+          final Ref peeled = this.repo.peel(tag);
+          if (this.commit.getId().equals(peeled.getPeeledObjectId())) {
+            dirs.add("tag").set(tag.getName().split("/")[2]).up();
+          }
+        }
         return dirs.iterator();
       }
     ).value();
