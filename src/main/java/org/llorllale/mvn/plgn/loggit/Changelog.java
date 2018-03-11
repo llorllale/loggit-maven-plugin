@@ -19,6 +19,7 @@ package org.llorllale.mvn.plgn.loggit;
 import com.jcabi.xml.XML;
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -291,8 +292,8 @@ public final class Changelog extends AbstractMojo {
    */
   private XML preprocess(XML xml) throws IOException {
     return new Pattern(this.includeRegex).transform(
-      new EndTag(this.endTag).transform(
-        new StartTag(this.startTag).transform(
+      new EndTag(Optional.ofNullable(this.endTag).orElse("")).transform(
+        new StartTag(Optional.ofNullable(this.startTag).orElse("")).transform(
           new Limit(this.maxEntries).transform(xml)
         )
       )
