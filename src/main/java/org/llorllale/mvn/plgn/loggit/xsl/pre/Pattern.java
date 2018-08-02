@@ -25,6 +25,8 @@ import org.llorllale.mvn.plgn.loggit.xsl.StylesheetEnvelope;
  * Includes commits with messages that match a given regular expression.
  *
  * @author George Aristy (george.aristy@gmail.com)
+ * @see <a href="https://www.w3.org/TR/xpath-functions-30/#func-matches">fn:matches</a>
+ * @see <a href="https://www.w3.org/TR/xpath-functions-30/#flags">Flags</a>
  * @since 0.6.0
  */
 public final class Pattern extends StylesheetEnvelope {
@@ -32,12 +34,16 @@ public final class Pattern extends StylesheetEnvelope {
    * Ctor.
    * 
    * @param regex the regular expression
+   * @param flags regex flags
    * @since 0.6.0
    */
-  public Pattern(String regex) {
+  public Pattern(String regex, String flags) {
     super(
       new ResourceOf("xsl/pre/pattern.xsl"),
-      new MapOf<>(new MapEntry<>("regex", regex))
+      new MapOf<>(
+          new MapEntry<>("regex", regex),
+          new MapEntry<>("flags", flags)
+      )
     );
   }
 }

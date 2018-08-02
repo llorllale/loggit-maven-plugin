@@ -18,10 +18,11 @@
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="3.0">
   <xsl:param name="regex"/>
+  <xsl:param name="flags"/>
   <xsl:template match="commits">
     <commits>
       <xsl:for-each select="commit">
-        <xsl:if test="matches(message/full, $regex)">
+        <xsl:if test="matches(message/full, $regex, $flags)">
           <xsl:copy-of select="."/>
         </xsl:if>
       </xsl:for-each>

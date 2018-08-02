@@ -80,6 +80,9 @@ public final class Changelog extends AbstractMojo {
   @Parameter(name = "includeRegex", defaultValue = ".*", property = "loggit.includeRegex")
   private String includeRegex;
 
+  @Parameter(name = "includeRegexFlags", defaultValue = "", property = "loggit.includeRegexFlags")
+  private String includeRegexFlags = "";
+
   /**
    * Ctor.
    * 
@@ -291,7 +294,7 @@ public final class Changelog extends AbstractMojo {
    * @throws IOException if there's an error during the transformation
    */
   private XML preprocess(XML xml) throws IOException {
-    return new Pattern(this.includeRegex).transform(
+    return new Pattern(this.includeRegex, this.includeRegexFlags).transform(
       new EndTag(Optional.ofNullable(this.endTag).orElse("")).transform(
         new StartTag(Optional.ofNullable(this.startTag).orElse("")).transform(
           new Limit(this.maxEntries).transform(xml)
