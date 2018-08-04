@@ -64,7 +64,7 @@ They are also available from the command line if you prefix them with `loggit.` 
             <repo>${basedir}</repo>
             <outputFile>${project.build.directory}/gitlog.xml</outputFile>
             <format>default</format>
-            <customFileFormat></customFileFormat> <!-- empty -->
+            <customFormatFile></customFormatFile> <!-- empty -->
             <branch>master</branch>
             <maxEntries>2147483647</maxEntries> <!-- Integer.MAX_VALUE -->
             <startTag></startTag> <!-- empty -->
@@ -82,7 +82,7 @@ $h3 Configuration
 * `<repo>`: path to the root directory of the git repo
 * `<outputFile>`: path to the file where the changelog should be written to
 * `<format>`: desired output format (see relevant example below). Possible values are `default`, `markdown`, and `custom`
-* `<customFileFormat>`: path to the custom format file (used only when `<format>` is `custom` (see relevant example below))
+* `<customFormatFile>`: path to the custom format file (used only when `<format>` is `custom` (see relevant example below))
 * `<branch>`: the git branch from which to read the changelog
 * `<maxEntries>`: the maximum number of entries to read into the changelog
 * `<startTag>`: if specified, will truncate the log starting at the commit with the given tag
@@ -98,7 +98,7 @@ In three stages:
 
 1. The git log is read and the XML is built (relevant configs: `<repo>`, `<branch>`)
 2. The XML is pre-processed for common use cases (relevant configs: `<maxEntries>`, `<startTag>`, `<endTag>`, `<includeRegex>`, `<includeRegexFlags>`)
-3. The XML is post-processed using XSLT and the result is written to file (relevant configs: `<format>`, `<customFileFormat>`, `<outputFile>`)
+3. The XML is post-processed using XSLT and the result is written to file (relevant configs: `<format>`, `<customFormatFile>`, `<outputFile>`)
 
 $h2 Examples
 
@@ -137,7 +137,7 @@ Use the following plugin configuration:
       <version>${pluginVersion}</version>
       <configuration>
         <format>custom</format>
-        <customFileFormat>path/to/custom/xslt/file.xsl</customFileFormat>
+        <customFormatFile>path/to/custom/xslt/file.xsl</customFormatFile>
       </configuration>
     </plugin>
 
