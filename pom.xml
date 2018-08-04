@@ -22,7 +22,7 @@
 
   <groupId>org.llorllale</groupId>
   <artifactId>loggit-maven-plugin</artifactId>
-  <version>1.0.1</version>
+  <version>1.1.0-SNAPSHOT</version>
 
   <packaging>maven-plugin</packaging>
 
