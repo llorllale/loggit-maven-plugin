@@ -50,8 +50,9 @@ $h2 Non goals
 
 $h2 Usage
 
-Include the plugin in your pom. All configurations have default values and are optional (values shown below are default).
-They are also available from the command line if you prefix them with `loggit.` (eg. `-Dloggit.maxEntries`).
+Include the plugin in your pom. Its only goal is **changelog** and is set to execute in the `prepare-package` phase by default.
+All configurations have default values and are optional (values shown below are default).
+They are also available from the command line if you prefix them with `loggit.` (eg. `mvn loggit:changelog -Dloggit.maxEntries=50`).
 
     <build>
       <plugins>
