@@ -29,7 +29,7 @@ import org.llorllale.mvn.plgn.loggit.xsl.StylesheetEnvelope;
  * @see <a href="https://www.w3.org/TR/xpath-functions-30/#flags">Flags</a>
  * @since 0.6.0
  */
-public final class Pattern extends StylesheetEnvelope {
+public final class Include extends StylesheetEnvelope {
   /**
    * Ctor.
    * 
@@ -37,9 +37,9 @@ public final class Pattern extends StylesheetEnvelope {
    * @param flags regex flags
    * @since 0.6.0
    */
-  public Pattern(String regex, String flags) {
+  public Include(String regex, String flags) {
     super(
-      new ResourceOf("xsl/pre/pattern.xsl"),
+      new ResourceOf("xsl/pre/include.xsl"),
       new MapOf<>(
           new MapEntry<>("regex", regex),
           new MapEntry<>("flags", flags)

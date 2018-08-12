@@ -36,8 +36,9 @@ import org.llorllale.mvn.plgn.loggit.xsl.post.Custom;
 import org.llorllale.mvn.plgn.loggit.xsl.post.Identity;
 import org.llorllale.mvn.plgn.loggit.xsl.post.Markdown;
 import org.llorllale.mvn.plgn.loggit.xsl.pre.EndTag;
+import org.llorllale.mvn.plgn.loggit.xsl.pre.Exclude;
+import org.llorllale.mvn.plgn.loggit.xsl.pre.Include;
 import org.llorllale.mvn.plgn.loggit.xsl.pre.Limit;
-import org.llorllale.mvn.plgn.loggit.xsl.pre.Pattern;
 import org.llorllale.mvn.plgn.loggit.xsl.pre.StartTag;
 
 /**
@@ -82,6 +83,12 @@ public final class Changelog extends AbstractMojo {
 
   @Parameter(name = "includeRegexFlags", defaultValue = "", property = "loggit.includeRegexFlags")
   private String includeRegexFlags = "";
+
+  @Parameter(name = "excludeRegex", defaultValue = ".*", property = "loggit.excludeRegex")
+  private String excludeRegex = ".*";
+
+  @Parameter(name = "excludeRegexFlags", defaultValue = "", property = "loggit.excludeRegexFlags")
+  private String excludeRegexFlags = "";
 
   /**
    * Ctor.
@@ -294,10 +301,12 @@ public final class Changelog extends AbstractMojo {
    * @throws IOException if there's an error during the transformation
    */
   private XML preprocess(XML xml) throws IOException {
-    return new Pattern(this.includeRegex, this.includeRegexFlags).transform(
-      new EndTag(Optional.ofNullable(this.endTag).orElse("")).transform(
-        new StartTag(Optional.ofNullable(this.startTag).orElse("")).transform(
-          new Limit(this.maxEntries).transform(xml)
+    return new Exclude(this.excludeRegex, this.excludeRegexFlags).transform(
+      new Include(this.includeRegex, this.includeRegexFlags).transform(
+        new EndTag(Optional.ofNullable(this.endTag).orElse("")).transform(
+          new StartTag(Optional.ofNullable(this.startTag).orElse("")).transform(
+            new Limit(this.maxEntries).transform(xml)
+          )
         )
       )
     );

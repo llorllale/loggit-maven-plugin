@@ -28,14 +28,14 @@ import org.junit.Test;
 import org.llorllale.mvn.plgn.loggit.Schema;
 
 /**
- * Tests for {@link Pattern}.
+ * Tests for {@link Include}.
  *
  * @author George Aristy (george.aristy@gmail.com)
  * @since 0.6.0
  * @checkstyle MethodName (500 lines)
  */
 @SuppressWarnings("checkstyle:MultipleStringLiterals")
-public final class PatternTest {
+public final class IncludeTest {
   private static final String LOG =
     "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
     + "<log>"
@@ -77,7 +77,7 @@ public final class PatternTest {
   @Test
   public void includeOnlyCommitsWithRegex() {
     assertThat(
-      new Pattern("First.*", "").transform(new XMLDocument(PatternTest.LOG)),
+      new Include("First.*", "").transform(new XMLDocument(IncludeTest.LOG)),
       allOf(
         hasXPath("/log/commits/commit[id = 'b8ed3b64435525f8f5c9196489dce85613cefe96']"),
         not(hasXPath("/log/commits/commit[id = 'fcc814a658aea3537ad5182ff211ed8c58479fb9']"))
@@ -93,7 +93,7 @@ public final class PatternTest {
   @Test
   public void includeAllCommitsWithDefaultRegex() {
     assertThat(
-      new Pattern(".*", "").transform(new XMLDocument(PatternTest.LOG)),
+      new Include(".*", "").transform(new XMLDocument(IncludeTest.LOG)),
       allOf(
         hasXPath("/log/commits/commit[id = 'b8ed3b64435525f8f5c9196489dce85613cefe96']"),
         hasXPath("/log/commits/commit[id = 'fcc814a658aea3537ad5182ff211ed8c58479fb9']")
@@ -109,7 +109,7 @@ public final class PatternTest {
   @Test
   public void validateXml() {
     new StrictXML(
-      new Pattern(".*", "").transform(new XMLDocument(PatternTest.LOG)),
+      new Include(".*", "").transform(new XMLDocument(IncludeTest.LOG)),
       new Schema()
     ).toString();
   }
@@ -122,7 +122,7 @@ public final class PatternTest {
   @Test
   public void caseInsensitiveRegex() {
     assertThat(
-      new Pattern("second commit", "i").transform(new XMLDocument(PatternTest.LOG)),
+      new Include("second commit", "i").transform(new XMLDocument(IncludeTest.LOG)),
       allOf(
         hasXPath("/log/commits/commit[id = 'fcc814a658aea3537ad5182ff211ed8c58479fb9']"),
         not(hasXPath("/log/commits/commit[id = 'b8ed3b64435525f8f5c9196489dce85613cefe96']"))
