@@ -39,6 +39,7 @@ import org.llorllale.mvn.plgn.loggit.xsl.pre.EndTag;
 import org.llorllale.mvn.plgn.loggit.xsl.pre.Exclude;
 import org.llorllale.mvn.plgn.loggit.xsl.pre.Include;
 import org.llorllale.mvn.plgn.loggit.xsl.pre.Limit;
+import org.llorllale.mvn.plgn.loggit.xsl.pre.StartCommit;
 import org.llorllale.mvn.plgn.loggit.xsl.pre.StartTag;
 
 /**
@@ -48,7 +49,12 @@ import org.llorllale.mvn.plgn.loggit.xsl.pre.StartTag;
  * @since 0.2.0
  */
 @Mojo(name = "changelog", defaultPhase = LifecyclePhase.PREPARE_PACKAGE)
-@SuppressWarnings("checkstyle:MultipleStringLiterals")
+@SuppressWarnings(
+  {
+    "checkstyle:MultipleStringLiterals",
+    "checkstyle:ClassDataAbstractionCoupling"
+  }
+)
 public final class Changelog extends AbstractMojo {
   @Parameter(name = "repo", defaultValue = "${basedir}")
   private File repo;
@@ -89,6 +95,9 @@ public final class Changelog extends AbstractMojo {
 
   @Parameter(name = "excludeRegexFlags", defaultValue = "", property = "loggit.excludeRegexFlags")
   private String excludeRegexFlags = "";
+
+  @Parameter(name = "startCommit", defaultValue = "", property = "loggit.startCommit")
+  private String startCommit = "";
 
   /**
    * Ctor.
@@ -303,9 +312,11 @@ public final class Changelog extends AbstractMojo {
   private XML preprocess(XML xml) throws IOException {
     return new Exclude(this.excludeRegex, this.excludeRegexFlags).transform(
       new Include(this.includeRegex, this.includeRegexFlags).transform(
-        new EndTag(Optional.ofNullable(this.endTag).orElse("")).transform(
-          new StartTag(Optional.ofNullable(this.startTag).orElse("")).transform(
-            new Limit(this.maxEntries).transform(xml)
+        new StartCommit(this.startCommit).transform(
+          new EndTag(Optional.ofNullable(this.endTag).orElse("")).transform(
+            new StartTag(Optional.ofNullable(this.startTag).orElse("")).transform(
+              new Limit(this.maxEntries).transform(xml)
+            )
           )
         )
       )
