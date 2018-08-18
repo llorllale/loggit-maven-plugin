@@ -52,6 +52,7 @@ They are also available from the command line if you prefix them with `loggit.` 
           <includeRegexFlags></includeRegexFlags> <!-- empty -->
           <excludeRegex>.*</excludeRegex> <!-- default value explained below -->
           <excludeRegexFlags></excludeRegexFlags> <!-- empty -->
+          <startCommit></startCommit>   <!-- empty -->
         </configuration>
       </plugin>
       ...
@@ -73,6 +74,7 @@ They are also available from the command line if you prefix them with `loggit.` 
 * `<includeRegexFlags>`: flags for `<includeRegex>`. Supported values can be found [here](https://www.w3.org/TR/xpath-functions-30/#flags)
 * `<excludeRegex>`: excludes commits with messages that match the given regular expression. **Note:** the default value is set to `.*` because we assume that this will never be used as a value in production use. If we need to exclude all commits, we just set `<maxEntries>` to `0`. We use `.*` to determine whether or not a value was provided for `<excludeRegex>`.
 * `<excludeRegexFlags>`: flags for `<excludeRegex>`. Supported values can be found [here](https://www.w3.org/TR/xpath-functions-30/#flags)
+* `<startCommit>`: if specified, will include commits until the given ID is found (inclusive)
 
 ## How it works
 
@@ -81,7 +83,7 @@ They are also available from the command line if you prefix them with `loggit.` 
 In three stages:
 
 1. The git log is read and the XML is built (relevant configs: `<repo>`, `<branch>`)
-2. The XML is pre-processed for common use cases (relevant configs: `<maxEntries>`, `<startTag>`, `<endTag>`, `<includeRegex>`, `<includeRegexFlags>`, `<excludeRegex>`, `<excludeRegexFlags>`)
+2. The XML is pre-processed for common use cases (relevant configs: `<maxEntries>`, `<startTag>`, `<endTag>`, `<includeRegex>`, `<includeRegexFlags>`, `<excludeRegex>`, `<excludeRegexFlags>`, `<startCommit>`)
 3. The XML is post-processed using XSLT and the result is written to file (relevant configs: `<format>`, `<customFormatFile>`, `<outputFile>`)
 
 ## Examples
